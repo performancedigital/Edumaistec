@@ -4,11 +4,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>EdumaisTec | Transformando Vidas Através da Educação</title>
+    <title>EdumaisTec | Diploma Técnico por Competência Reconhecido MEC</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script>
       tailwind.config = {
         theme: {
@@ -22,6 +22,9 @@
             fontFamily: {
               title: ['Montserrat', 'sans-serif'],
               body: ['Inter', 'sans-serif'],
+            },
+            animation: {
+              'shine': 'shine 1.5s ease-in-out infinite',
             }
           },
         },
@@ -29,10 +32,16 @@
     </script>
     <style>
       html { scroll-behavior: smooth; }
-      body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
-      h1, h2, h3 { font-family: 'Montserrat', sans-serif; font-weight: 800; }
-      .glass { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); }
+      body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+      h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; }
+      .glass { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.2); }
       .orange-gradient { background: linear-gradient(135deg, #FF6600 0%, #FF8533 100%); }
+      
+      /* Smooth scroll bar */
+      ::-webkit-scrollbar { width: 8px; }
+      ::-webkit-scrollbar-track { background: #f1f1f1; }
+      ::-webkit-scrollbar-thumb { background: #003366; border-radius: 10px; }
+      ::-webkit-scrollbar-thumb:hover { background: #FF6600; }
     </style>
   <script type="importmap">
 {
