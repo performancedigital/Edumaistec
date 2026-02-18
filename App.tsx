@@ -3,7 +3,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { 
   CheckCircle, 
   Users, 
-  Clock, 
   ShieldCheck, 
   MessageCircle, 
   ChevronDown, 
@@ -48,34 +47,37 @@ const LeadModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-navy/80 backdrop-blur-md" onClick={onClose}></div>
-      <div className="bg-white rounded-[2.5rem] w-full max-w-md p-10 relative z-10 shadow-3xl animate-fade-in border border-gray-100">
+    <div className="fixed inset-0 z-[110] flex items-center justify-center p-4">
+      <div className="absolute inset-0 bg-navy/90 backdrop-blur-md" onClick={onClose}></div>
+      <div className="bg-white rounded-[2.5rem] w-full max-w-md p-10 relative z-10 shadow-3xl animate-fade-in border border-white/20">
         <button onClick={onClose} className="absolute top-6 right-6 text-gray-400 hover:text-navy transition-colors">
           <X size={24} />
         </button>
         <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-brandOrange/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-            <GraduationCap className="text-brandOrange" size={32} />
+          <div className="w-20 h-20 bg-brandOrange/10 rounded-3xl flex items-center justify-center mx-auto mb-6">
+            <GraduationCap className="text-brandOrange" size={40} />
           </div>
-          <h3 className="text-2xl font-black text-navy leading-tight mb-2 uppercase tracking-tighter">Garanta sua Vaga!</h3>
-          <p className="text-gray-500 font-medium">Insira seus dados para receber a <span className="text-brandOrange font-bold">Análise Documental Gratuita</span> via WhatsApp e validar seu diploma técnico rápido.</p>
-        </div>
-        <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); onClose(); }}>
-          <div>
-            <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 ml-1">Seu Nome Completo</label>
-            <input required type="text" placeholder="Ex: João Silva" className="w-full bg-brandLight border-2 border-transparent focus:border-brandOrange px-6 py-4 rounded-2xl font-medium outline-none transition-all" />
-          </div>
-          <div>
-            <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 ml-1">WhatsApp (DDD + Número)</label>
-            <input required type="tel" placeholder="(00) 00000-0000" className="w-full bg-brandLight border-2 border-transparent focus:border-brandOrange px-6 py-4 rounded-2xl font-medium outline-none transition-all" />
-          </div>
-          <button type="submit" className="w-full bg-brandOrange text-white py-5 rounded-2xl font-black text-lg hover:brightness-110 transition-all shadow-xl shadow-brandOrange/20 active:scale-95 flex items-center justify-center group uppercase tracking-tight">
-            Validar Experiência Agora <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-          </button>
-          <p className="text-[10px] text-center text-gray-400 font-bold uppercase tracking-widest pt-4">
-            <Lock size={10} className="inline mr-1" /> Seus dados estão protegidos pela LGPD.
+          <h3 className="text-3xl font-black text-navy leading-none mb-3 uppercase tracking-tighter italic">Análise Gratuita</h3>
+          <p className="text-gray-500 font-medium text-sm leading-relaxed">
+            Nossa equipe jurídica e técnica vai validar sua experiência agora mesmo. Insira seus dados para receber o diagnóstico no seu <span className="text-green-600 font-bold">WhatsApp</span>.
           </p>
+        </div>
+        <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); onClose(); window.open('https://wa.me/5531973276886', '_blank'); }}>
+          <div className="group">
+            <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 ml-1 group-focus-within:text-brandOrange transition-colors">Seu Nome Completo</label>
+            <input required type="text" placeholder="Ex: João da Silva" className="w-full bg-brandLight border-2 border-transparent focus:border-brandOrange px-6 py-4 rounded-2xl font-bold outline-none transition-all placeholder:text-gray-300" />
+          </div>
+          <div className="group">
+            <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 ml-1 group-focus-within:text-brandOrange transition-colors">WhatsApp com DDD</label>
+            <input required type="tel" placeholder="(00) 00000-0000" className="w-full bg-brandLight border-2 border-transparent focus:border-brandOrange px-6 py-4 rounded-2xl font-bold outline-none transition-all placeholder:text-gray-300" />
+          </div>
+          <button type="submit" className="w-full bg-brandOrange text-white py-6 rounded-2xl font-black text-xl hover:brightness-110 transition-all shadow-xl shadow-brandOrange/20 active:scale-95 flex items-center justify-center group uppercase tracking-tight">
+            INICIAR CERTIFICAÇÃO <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+          </button>
+          <div className="flex items-center justify-center pt-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest gap-4">
+             <span className="flex items-center"><Lock size={12} className="mr-1" /> Dados Protegidos</span>
+             <span className="flex items-center"><CheckCircle size={12} className="mr-1" /> SISTEC Oficial</span>
+          </div>
         </form>
       </div>
     </div>
@@ -140,7 +142,7 @@ export default function App() {
   return (
     <div className="min-h-screen flex flex-col font-body selection:bg-brandOrange selection:text-white bg-white overflow-x-hidden">
       {/* Scroll Progress Bar */}
-      <div className="fixed top-0 left-0 h-1 bg-brandOrange z-[110] transition-all duration-150" style={{ width: `${scrollWidth}%` }} />
+      <div className="fixed top-0 left-0 h-1 bg-brandOrange z-[120] transition-all duration-150" style={{ width: `${scrollWidth}%` }} />
       
       <LeadModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
@@ -175,7 +177,7 @@ export default function App() {
       </header>
 
       <main className="flex-grow">
-        {/* Hero Section - Aumentado o espaçamento para criar impacto visual */}
+        {/* Hero Section */}
         <section id="início" className="relative bg-navy pt-56 pb-32 md:pt-80 md:pb-56 overflow-hidden">
           <div className="absolute inset-0 pointer-events-none">
             <div className="absolute top-1/4 -right-20 w-[600px] h-[600px] bg-brandOrange/20 rounded-full blur-[150px] animate-pulse"></div>
@@ -186,13 +188,13 @@ export default function App() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
               <Reveal>
                 <div className="inline-flex items-center bg-white/5 border border-white/10 text-brandOrange px-6 py-2 rounded-full font-bold text-xs mb-8 tracking-[0.2em] uppercase backdrop-blur-md">
-                  <Zap size={16} className="mr-2 fill-brandOrange" /> 1 ano de prática = 1 diploma técnico válido
+                  <Zap size={16} className="mr-2 fill-brandOrange" /> Transforme experiência em reconhecimento
                 </div>
                 <h1 className="text-5xl md:text-8xl font-title text-white mb-8 leading-[1] tracking-tighter">
-                  Sua experiência profissional vale um <span className="text-brandOrange italic">Diploma Técnico</span>
+                  Sua experiência de 1 ano vale um <span className="text-brandOrange italic underline decoration-white/20">Diploma Técnico</span>
                 </h1>
                 <p className="text-white/80 text-xl md:text-2xl mb-12 max-w-xl font-medium leading-relaxed">
-                  Regularize sua profissão em tempo recorde. Se você tem <span className="text-white font-bold underline decoration-brandOrange">1 ano de experiência</span>, já pode obter seu diploma técnico reconhecido pelo MEC e registro no SISTEC sem aulas cansativas.
+                  Sem provas longas. Sem aulas desnecessárias. Valide seu conhecimento profissional pelo MEC e conquiste o registro oficial no <span className="text-white font-bold underline decoration-brandOrange">SISTEC</span> agora.
                 </p>
                 
                 <div className="flex flex-col sm:flex-row gap-5">
@@ -222,15 +224,15 @@ export default function App() {
                       </div>
                       <div className="text-center">
                         <p className="text-5xl md:text-6xl font-black text-brandOrange mb-2 tracking-tighter">45</p>
-                        <p className="text-white/60 text-[10px] font-bold uppercase tracking-widest">Dias p/ Diploma</p>
+                        <p className="text-white/60 text-[10px] font-bold uppercase tracking-widest">Dias Médios</p>
                       </div>
                       <div className="text-center">
-                        <p className="text-5xl md:text-6xl font-black text-brandOrange mb-2 tracking-tighter">COREN</p>
+                        <p className="text-5xl md:text-6xl font-black text-brandOrange mb-2 tracking-tighter">CONSELHO</p>
                         <p className="text-white/60 text-[10px] font-bold uppercase tracking-widest">Registro Profissional</p>
                       </div>
                       <div className="text-center">
-                        <p className="text-5xl md:text-6xl font-black text-brandOrange mb-2 tracking-tighter">ONLINE</p>
-                        <p className="text-white/60 text-[10px] font-bold uppercase tracking-widest">Em Todo o Brasil</p>
+                        <p className="text-5xl md:text-6xl font-black text-brandOrange mb-2 tracking-tighter">MEC</p>
+                        <p className="text-white/60 text-[10px] font-bold uppercase tracking-widest">Validade Nacional</p>
                       </div>
                     </div>
                   </div>
@@ -241,94 +243,45 @@ export default function App() {
           </div>
         </section>
 
-        {/* Autoridade & Prova Social */}
-        <section className="py-16 bg-brandLight border-b border-gray-100">
-          <div className="container mx-auto px-4">
-             <div className="flex flex-wrap justify-center items-center gap-12 md:gap-32 opacity-40 grayscale contrast-125">
-                <span className="font-black text-xl uppercase tracking-[0.4em]">Cadastro MEC</span>
-                <span className="font-black text-xl uppercase tracking-[0.4em]">Registro SISTEC</span>
-                <span className="font-black text-xl uppercase tracking-[0.4em]">Lei Federal 9.394</span>
-                <span className="font-black text-xl uppercase tracking-[0.4em]">LDB Artigo 41</span>
-             </div>
-          </div>
-        </section>
-
-        {/* Sessão 2 - Cursos Técnicos Reconhecidos (Pareto) */}
+        {/* Especialidades */}
         <section id="cursos" className="py-24 bg-white relative">
           <div className="container mx-auto px-4">
             <Reveal className="text-center mb-24">
-              <span className="text-[10px] font-black text-brandOrange bg-brandOrange/5 px-6 py-2 rounded-full uppercase tracking-[0.3em] mb-6 inline-block">Sua regularização profissional rápida</span>
-              <h2 className="text-4xl md:text-7xl text-navy mb-8 font-title tracking-tighter uppercase leading-none">Cursos em <span className="text-brandOrange underline decoration-4 underline-offset-8">Destaque</span></h2>
+              <span className="text-[10px] font-black text-brandOrange bg-brandOrange/5 px-6 py-2 rounded-full uppercase tracking-[0.3em] mb-6 inline-block">As formações que o mercado exige</span>
+              <h2 className="text-4xl md:text-7xl text-navy mb-8 font-title tracking-tighter uppercase leading-none">Nossas <span className="text-brandOrange underline decoration-4 underline-offset-8">Especialidades</span></h2>
               <p className="text-gray-500 max-w-2xl mx-auto text-xl font-medium leading-relaxed">
-                Pare de perder oportunidades por falta de titulação. Estes são os cursos técnicos online reconhecidos com maior taxa de empregabilidade hoje.
+                Pare de perder promoções por falta de diploma. Escolha sua área de atuação e regularize sua profissão hoje mesmo.
               </p>
             </Reveal>
 
-            {/* HIGH SELLERS */}
-            <div className="mb-20">
-              <div className="flex items-center space-x-6 mb-12">
-                <div className="h-0.5 bg-gray-100 flex-grow"></div>
-                <h3 className="text-navy font-black text-xs uppercase tracking-[0.2em] flex items-center">
-                  <Star className="text-brandOrange mr-2 fill-brandOrange" size={16} /> Especialidades de Alta Performance
-                </h3>
-                <div className="h-0.5 bg-gray-100 flex-grow"></div>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                {[
-                  { icon: Stethoscope, title: "Técnico em Enfermagem", desc: "Consiga seu registro no COREN e atue legalmente em hospitais e clínicas particulares ou públicas.", tag: "Campeão de Vendas" },
-                  { icon: Building2, title: "Transações Imobiliárias", desc: "O passo obrigatório para quem deseja obter o CRECI e ser um corretor de imóveis de sucesso.", tag: "Acesso ao CRECI" },
-                  { icon: Activity, title: "Automação Industrial", desc: "Valide sua prática com sistemas complexos e garanta as melhores promoções no setor industrial.", tag: "Indústria 4.0" },
-                  { icon: ShieldCheck, title: "Segurança do Trabalho", desc: "Formação indispensável. Proteja vidas e garanta que sua empresa cumpra todas as normas técnicas vigentes.", tag: "Altíssima Demanda" },
-                  { icon: Thermometer, title: "Refrigeração e Climatização", desc: "A área de serviços que nunca para de crescer. Obtenha seu diploma e gerencie seus próprios projetos.", tag: "Setor de Serviços" },
-                ].map((c, i) => (
-                  <Reveal key={i} delay={i * 100}>
-                    <div className="bg-brandLight p-10 rounded-[3rem] border-2 border-transparent hover:border-brandOrange hover:bg-white hover:shadow-3xl transition-all duration-500 group relative flex flex-col h-full overflow-hidden">
-                      <div className="absolute top-0 right-0 w-24 h-24 bg-brandOrange/10 rounded-bl-[4rem] transform translate-x-8 -translate-y-8 group-hover:translate-x-4 group-hover:-translate-y-4 transition-transform duration-500"></div>
-                      <div className="mb-10 relative z-10 flex justify-between items-start">
-                        <div className="bg-navy text-white p-5 rounded-2xl group-hover:bg-brandOrange transition-colors shadow-lg shadow-navy/10">
-                          <c.icon size={28} />
-                        </div>
-                        <span className="text-[9px] font-black bg-brandOrange text-white px-4 py-1.5 rounded-full uppercase tracking-widest shadow-md">{c.tag}</span>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-20">
+              {[
+                { icon: Stethoscope, title: "Técnico em Enfermagem", desc: "Fundamental para quem atua em hospitais e clínicas e precisa do registro no COREN.", tag: "Alta Demanda" },
+                { icon: Building2, title: "Transações Imobiliárias", desc: "O passo obrigatório para quem deseja obter o CRECI e atuar como corretor legalizado.", tag: "Acesso ao CRECI" },
+                { icon: Activity, title: "Automação Industrial", desc: "Valide sua competência em sistemas industriais e garanta melhores cargos na indústria.", tag: "Setor Industrial" },
+                { icon: ShieldCheck, title: "Segurança do Trabalho", desc: "Profissional indispensável em qualquer empresa. Garanta sua titulação oficial.", tag: "Mandatório" },
+                { icon: Thermometer, title: "Refrigeração e Climatização", desc: "Especialize-se na área que mais cresce no setor de serviços prediais e industriais.", tag: "Serviços Técnicos" },
+              ].map((c, i) => (
+                <Reveal key={i} delay={i * 100}>
+                  <div className="bg-brandLight p-10 rounded-[3rem] border-2 border-transparent hover:border-brandOrange hover:bg-white hover:shadow-3xl transition-all duration-500 group relative flex flex-col h-full overflow-hidden">
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-brandOrange/10 rounded-bl-[4rem] transform translate-x-8 -translate-y-8 group-hover:translate-x-4 group-hover:-translate-y-4 transition-transform duration-500"></div>
+                    <div className="mb-10 relative z-10 flex justify-between items-start">
+                      <div className="bg-navy text-white p-5 rounded-2xl group-hover:bg-brandOrange transition-colors shadow-lg shadow-navy/10">
+                        <c.icon size={28} />
                       </div>
-                      <h4 className="text-2xl font-black text-navy mb-5 leading-tight group-hover:text-brandOrange transition-colors">{c.title}</h4>
-                      <p className="text-gray-500 text-base font-medium leading-relaxed mb-10 flex-grow">{c.desc}</p>
-                      <button 
-                        onClick={openModal}
-                        className="w-full bg-navy text-white py-5 rounded-2xl font-bold text-xs uppercase tracking-widest hover:bg-brandBlueLight transition-all flex items-center justify-center group/btn shadow-xl shadow-navy/10"
-                      >
-                        Validar Experiência <ArrowUpRight size={16} className="ml-2 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />
-                      </button>
+                      <span className="text-[9px] font-black bg-brandOrange text-white px-4 py-1.5 rounded-full uppercase tracking-widest shadow-md">{c.tag}</span>
                     </div>
-                  </Reveal>
-                ))}
-              </div>
-            </div>
-
-            {/* LOW SELLERS */}
-            <div className="mb-24">
-              <div className="flex items-center space-x-6 mb-12">
-                <div className="h-0.5 bg-gray-100 flex-grow"></div>
-                <h3 className="text-gray-400 font-bold text-[10px] uppercase tracking-widest">Outras Formações Estratégicas</h3>
-                <div className="h-0.5 bg-gray-100 flex-grow"></div>
-              </div>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-                {[
-                  { title: "Mecatrônica", icon: Wrench },
-                  { title: "Optometria", icon: Search },
-                  { title: "Podologia", icon: Activity },
-                  { title: "Enfermagem do Trabalho", icon: Stethoscope },
-                ].map((c, i) => (
-                  <button 
-                    key={i} 
-                    onClick={openModal}
-                    className="flex flex-col items-center justify-center p-10 bg-white border border-gray-100 rounded-[2.5rem] hover:shadow-2xl hover:border-brandOrange transition-all group"
-                  >
-                    <c.icon className="text-gray-300 group-hover:text-brandOrange mb-6 transition-colors" size={32} />
-                    <span className="text-navy font-black text-xs text-center uppercase tracking-tighter leading-tight">{c.title}</span>
-                  </button>
-                ))}
-              </div>
+                    <h4 className="text-2xl font-black text-navy mb-5 leading-tight group-hover:text-brandOrange transition-colors">{c.title}</h4>
+                    <p className="text-gray-500 text-base font-medium leading-relaxed mb-10 flex-grow">{c.desc}</p>
+                    <button 
+                      onClick={openModal}
+                      className="w-full bg-navy text-white py-5 rounded-2xl font-bold text-xs uppercase tracking-widest hover:bg-brandBlueLight transition-all flex items-center justify-center group/btn shadow-xl shadow-navy/10"
+                    >
+                      VALIDAR AGORA <ArrowUpRight size={16} className="ml-2 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />
+                    </button>
+                  </div>
+                </Reveal>
+              ))}
             </div>
 
             <Reveal className="text-center">
@@ -336,13 +289,13 @@ export default function App() {
                 onClick={openModal}
                 className="bg-brandOrange text-white px-16 py-7 rounded-[2rem] font-black text-xl hover:scale-105 active:scale-95 transition-all shadow-3xl shadow-brandOrange/30 uppercase tracking-tighter flex items-center mx-auto"
               >
-                VER LISTA COMPLETA (+50 CURSOS) <ChevronDown className="ml-3" />
+                VER LISTA COMPLETA DE CURSOS <ChevronDown className="ml-3" />
               </button>
             </Reveal>
           </div>
         </section>
 
-        {/* Seção de Autoridade & Legalidade - SEO Focus */}
+        {/* Autoridade & Legalidade */}
         <section id="certificacao" className="py-32 bg-navy relative overflow-hidden">
            <div className="absolute inset-0 opacity-10 pointer-events-none">
              <Building2 className="absolute -left-20 -bottom-20 w-96 h-96 transform -rotate-12" />
@@ -350,17 +303,17 @@ export default function App() {
            <div className="container mx-auto px-4 relative z-10">
              <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
                <Reveal>
-                 <span className="text-brandOrange font-black text-xs uppercase tracking-[0.4em] mb-8 inline-block">Certificação por Experiência Profissional</span>
-                 <h2 className="text-4xl md:text-7xl text-white font-title mb-10 leading-[0.9] tracking-tighter uppercase">Diploma Técnico <span className="text-brandOrange">Válido & Reconhecido</span> em Todo o Brasil</h2>
+                 <span className="text-brandOrange font-black text-xs uppercase tracking-[0.4em] mb-8 inline-block">Certificação Federal</span>
+                 <h2 className="text-4xl md:text-7xl text-white font-title mb-10 leading-[0.9] tracking-tighter uppercase">Diploma <span className="text-brandOrange">Válido & Seguro</span> Conforme a LDB</h2>
                  <p className="text-white/60 text-xl leading-relaxed mb-12 font-medium">
-                   Não perca mais tempo sendo apenas "o cara que sabe fazer". A <span className="text-white font-bold underline decoration-brandOrange underline-offset-4">Certificação por Competência</span> é a forma mais rápida de validar seu conhecimento prático através do Art. 41 da Lei de Diretrizes e Bases da Educação Nacional (Lei 9.394/96).
+                   O <span className="text-white font-bold underline decoration-brandOrange underline-offset-4">Artigo 41 da Lei 9.394/96</span> garante que sua prática vale como educação. Não gaste 2 anos estudando o que você já sabe.
                  </p>
                  <div className="space-y-6 mb-12">
                    {[
-                     "Diploma aceito em qualquer Concurso Público",
-                     "Registro imediato nos Conselhos (CFT, CRECI, COREN, etc)",
-                     "Consulta oficial pelo SISTEC/MEC (Autenticidade Garantida)",
-                     "Segurança jurídica e validade nacional vitalícia"
+                     "Aceito em Concursos Públicos e Processos Seletivos",
+                     "Registro profissional em COREN, CFT, CRECI, etc",
+                     "Autenticidade garantida pelo SISTEC do MEC",
+                     "Válido em todo o território nacional"
                    ].map((t, i) => (
                      <div key={i} className="flex items-center text-white/90 font-bold text-lg">
                        <div className="bg-brandOrange/20 p-2 rounded-lg mr-5">
@@ -370,8 +323,8 @@ export default function App() {
                      </div>
                    ))}
                  </div>
-                 <button onClick={openModal} className="bg-brandOrange text-white px-12 py-6 rounded-2xl font-black text-lg hover:brightness-110 shadow-3xl shadow-brandOrange/20 transition-all uppercase flex items-center">
-                    Garantir Meu Registro Profissional <ArrowRight size={20} className="ml-3" />
+                 <button onClick={openModal} className="bg-brandOrange text-white px-12 py-6 rounded-2xl font-black text-lg hover:brightness-110 shadow-3xl shadow-brandOrange/20 transition-all uppercase flex items-center group">
+                    VALIDAR MINHA CARREIRA AGORA <ArrowRight size={20} className="ml-3 group-hover:translate-x-2 transition-transform" />
                  </button>
                </Reveal>
                <div className="relative">
@@ -383,8 +336,8 @@ export default function App() {
                            <Zap className="text-brandOrange group-hover:text-white" size={32} />
                          </div>
                          <div>
-                           <h4 className="text-white font-black text-2xl mb-3 tracking-tight">Processo Acelerado</h4>
-                           <p className="text-white/40 text-base font-medium">Esqueça os 2 anos de banco de escola. Sua experiência de 1 ano reduz o tempo de certificação para apenas 45 dias médios.</p>
+                           <h4 className="text-white font-black text-2xl mb-3 tracking-tight">Análise Imediata</h4>
+                           <p className="text-white/40 text-base font-medium">Nossa equipe avalia sua documentação e responde em até 24h úteis sobre sua eligibilidade.</p>
                          </div>
                        </div>
                        <div className="flex items-start group">
@@ -392,15 +345,14 @@ export default function App() {
                            <ShieldCheck className="text-brandOrange group-hover:text-white" size={32} />
                          </div>
                          <div>
-                           <h4 className="text-white font-black text-2xl mb-3 tracking-tight">Zero Burocracia</h4>
-                           <p className="text-white/40 text-base font-medium">Análise documental 100% digital. Você envia os documentos pelo computador ou celular e nossa equipe cuida de tudo.</p>
+                           <h4 className="text-white font-black text-2xl mb-3 tracking-tight">Garantia SISTEC</h4>
+                           <p className="text-white/40 text-base font-medium">Após aprovação, seu registro é inserido no portal oficial do MEC para consulta pública imediata.</p>
                          </div>
                        </div>
                        <div className="pt-6">
-                         <div className="p-6 bg-white/5 rounded-3xl border border-white/5 text-center">
-                            <p className="text-brandOrange font-black text-3xl mb-1">SISTEC</p>
-                            <p className="text-white/40 text-[10px] font-bold uppercase tracking-widest">Consulta de Autenticidade no MEC</p>
-                         </div>
+                         <button onClick={openModal} className="w-full py-6 bg-white text-navy font-black rounded-3xl hover:bg-brandOrange hover:text-white transition-all uppercase tracking-widest text-sm">
+                            Falar com um Consultor
+                         </button>
                        </div>
                      </div>
                    </div>
@@ -410,22 +362,22 @@ export default function App() {
            </div>
         </section>
 
-        {/* FAQ Persuasivo - Quebra de Objeções */}
+        {/* FAQ Persuasivo */}
         <section id="faq" className="py-32 bg-white">
            <div className="container mx-auto px-4 max-w-5xl">
               <Reveal className="text-center mb-20">
-                 <h2 className="text-4xl md:text-7xl text-navy font-title tracking-tighter uppercase mb-6 leading-none">Perguntas <span className="text-brandOrange">Frequentes</span></h2>
-                 <p className="text-gray-500 font-medium text-xl">Resolvemos suas dúvidas para que você dê o próximo passo com segurança.</p>
+                 <h2 className="text-4xl md:text-7xl text-navy font-title tracking-tighter uppercase mb-6 leading-none">Principais <span className="text-brandOrange">Dúvidas</span></h2>
+                 <p className="text-gray-500 font-medium text-xl">Esclareça suas incertezas e dê o próximo passo na sua carreira.</p>
               </Reveal>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                  {[
-                   { q: "O diploma é igual ao de um curso presencial?", a: "Sim, absolutamente. O diploma tem a mesma validade jurídica e não contém qualquer observação de que foi obtido por competência." },
-                   { q: "Posso realmente me registrar no COREN ou CRECI?", a: "Sim! Milhares de nossos alunos já obtiveram seus registros profissionais nos conselhos de classe através dessa modalidade legal." },
-                   { q: "Quanto custa o processo?", a: "O valor é infinitamente menor que uma mensalidade de 2 anos. Clique em qualquer botão para receber a tabela de investimento via WhatsApp." },
-                   { q: "E se eu não for aprovado na prova?", a: "Nosso suporte pedagógico te orienta durante todo o processo. Você terá novas chances de realizar a avaliação sem custos adicionais." }
+                   { q: "O diploma é igual ao de quem fez o curso?", a: "Sim. O documento é emitido por escola técnica credenciada e não informa se foi por competência ou regular. Validade jurídica absoluta." },
+                   { q: "Posso me registrar no COREN ou CRECI?", a: "Sim! O diploma é oficial e registrado no MEC, o que garante o direito ao registro profissional nos conselhos de classe." },
+                   { q: "Qual o tempo médio do processo?", a: "Do envio da documentação até a emissão do diploma, o tempo médio é de 45 dias úteis." },
+                   { q: "Preciso comprovar quanto tempo?", a: "É necessário comprovar no mínimo 1 ano de experiência profissional na área técnica desejada." }
                  ].map((f, i) => (
                    <Reveal key={i} delay={i * 100}>
-                      <div className="group border-2 border-gray-100 rounded-[2.5rem] p-10 hover:border-brandOrange hover:bg-brandLight transition-all cursor-pointer h-full">
+                      <div onClick={openModal} className="group border-2 border-gray-100 rounded-[2.5rem] p-10 hover:border-brandOrange hover:bg-brandLight transition-all cursor-pointer h-full">
                          <h4 className="text-navy font-black text-xl mb-6 flex items-start">
                             <HelpCircle className="text-brandOrange mr-4 shrink-0 mt-1" size={24} /> {f.q}
                          </h4>
@@ -434,39 +386,27 @@ export default function App() {
                    </Reveal>
                  ))}
               </div>
-              <div className="mt-16 text-center">
-                <button onClick={openModal} className="text-navy font-black text-sm uppercase tracking-widest border-b-2 border-brandOrange pb-2 hover:text-brandOrange transition-colors">
-                   Tenho outra dúvida, quero falar com um especialista
-                </button>
-              </div>
            </div>
         </section>
 
-        {/* CTA Matador */}
+        {/* CTA Final */}
         <section className="py-32 bg-brandOrange relative overflow-hidden">
            <div className="container mx-auto px-4 text-center relative z-10">
               <Reveal>
-                 <h2 className="text-5xl md:text-8xl text-white font-black mb-12 leading-none tracking-tighter uppercase">
-                   Não deixe sua <br className="hidden md:block"/> promoção passar!
+                 <h2 className="text-5xl md:text-8xl text-white font-black mb-12 leading-none tracking-tighter uppercase italic">
+                   VALIDE SUA EXPERIÊNCIA <br className="hidden md:block"/> E MUDE DE VIDA!
                  </h2>
                  <p className="text-white/80 text-xl md:text-3xl mb-16 font-medium max-w-4xl mx-auto">
-                   O mercado exige titulação técnica. Obtenha seu diploma por experiência profissional hoje mesmo e garanta sua estabilidade financeira.
+                   Não perca mais tempo. Regularize sua profissão hoje mesmo e conquiste o salário que você realmente merece.
                  </p>
                  <button 
                   onClick={openModal}
                   className="bg-navy text-white px-16 py-8 rounded-[2.5rem] font-black text-2xl hover:bg-brandBlueLight hover:scale-105 active:scale-95 transition-all shadow-3xl shadow-navy/30 uppercase tracking-tight"
                  >
-                    SOLICITAR ANÁLISE DOCUMENTAL GRÁTIS
+                    SOLICITAR ANÁLISE GRATUITA AGORA
                  </button>
-                 <div className="mt-12 flex flex-wrap justify-center gap-10 opacity-40">
-                    <div className="flex items-center text-navy text-[10px] font-black uppercase tracking-widest"><Lock size={16} className="mr-3" /> Ambiente 100% Seguro</div>
-                    <div className="flex items-center text-navy text-[10px] font-black uppercase tracking-widest"><Clock size={16} className="mr-3" /> Resposta em até 24h</div>
-                 </div>
               </Reveal>
            </div>
-           {/* Background Decorations */}
-           <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
-           <div className="absolute bottom-0 left-0 w-80 h-80 bg-navy/5 rounded-full translate-y-1/2 -translate-x-1/2"></div>
         </section>
 
         {/* Localização & Contato */}
@@ -474,12 +414,12 @@ export default function App() {
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                {[
-                 { icon: MessageCircle, title: "WhatsApp Oficial", val: "(31) 97327-6886", color: "text-green-500" },
+                 { icon: MessageCircle, title: "Central WhatsApp", val: "(31) 97327-6886", color: "text-green-500" },
                  { icon: Mail, title: "E-mail Atendimento", val: "edumaistecoficial@gmail.com", color: "text-red-500" },
-                 { icon: Instagram, title: "Siga no Instagram", val: "@edumaistec", color: "text-pink-500" },
+                 { icon: Instagram, title: "Nosso Instagram", val: "@edumaistec", color: "text-pink-500" },
                  { icon: MapPin, title: "Sede Administrativa", val: "Cel. Fabriciano - MG", color: "text-navy" }
                ].map((c, i) => (
-                 <div key={i} className="bg-white p-10 rounded-[2.5rem] border border-gray-100 text-center hover:shadow-2xl transition-all group cursor-default">
+                 <div key={i} onClick={openModal} className="bg-white p-10 rounded-[2.5rem] border border-gray-100 text-center hover:shadow-2xl transition-all group cursor-pointer">
                     <div className="w-16 h-16 bg-brandLight rounded-2xl flex items-center justify-center mx-auto mb-8 group-hover:rotate-12 transition-transform shadow-inner">
                        <c.icon className={c.color} size={32} />
                     </div>
@@ -493,52 +433,29 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-navy text-white py-20 border-t border-white/5">
+      <footer className="bg-navy text-white py-16">
         <div className="container mx-auto px-4 text-center">
-          <div className="flex items-center justify-center space-x-2 mb-12">
+          <div className="flex items-center justify-center space-x-2 mb-10">
              <div className="w-10 h-10 bg-brandOrange rounded-xl flex items-center justify-center shadow-lg shadow-brandOrange/20">
                 <Award className="text-navy w-6 h-6" />
              </div>
              <div className="font-black text-2xl tracking-tighter uppercase">EDU<span className="text-brandOrange">MAIS</span>TEC</div>
           </div>
-          <div className="flex flex-wrap justify-center gap-10 mb-16 text-white/40 text-[10px] font-black uppercase tracking-[0.3em]">
-            <a href="#" className="hover:text-brandOrange transition-colors">Políticas de Privacidade</a>
-            <a href="#" className="hover:text-brandOrange transition-colors">Termos de Uso</a>
-            <a href="#" className="hover:text-brandOrange transition-colors">Portal do SISTEC</a>
-            <a href="#" className="hover:text-brandOrange transition-colors">Trabalhe Conosco</a>
-          </div>
-          <div className="max-w-3xl mx-auto mb-16 opacity-20">
-            <p className="text-[10px] leading-relaxed uppercase tracking-widest font-bold">
-              Edumaistec Educação Profissional Ltda. • CNPJ: 62.215.924/0001-70 • Processo Amparado pelo Artigo 41 da Lei de Diretrizes e Bases da Educação Nacional (Lei 9.394/96). Todos os Direitos Reservados.
-            </p>
-          </div>
           <p className="text-[10px] text-white/20 font-black uppercase tracking-[0.6em]">
-            © {new Date().getFullYear()} EDUMAISTEC • Liderança em Certificação por Competência
+            © {new Date().getFullYear()} EDUMAISTEC • Liderança em Certificação Técnica por Competência
           </p>
         </div>
       </footer>
 
-      {/* Persistent Sticky CTAs */}
-      <div className="fixed bottom-10 right-10 z-[80] flex flex-col space-y-5">
+      {/* Persistent Sticky WhatsApp Button - Just the official logo, triggering modal */}
+      <div className="fixed bottom-10 right-10 z-[100]">
          <button 
            onClick={openModal}
-           className="bg-brandOrange text-white p-7 rounded-full shadow-3xl hover:scale-110 active:scale-95 transition-all group relative animate-bounce-slow"
+           className="bg-[#25D366] text-white p-5 rounded-full shadow-3xl hover:scale-110 active:scale-95 transition-all group animate-bounce-slow flex items-center justify-center"
          >
-            <Zap size={36} />
-            <span className="absolute right-full mr-8 bg-white text-navy px-8 py-4 rounded-2xl font-black text-sm shadow-2xl opacity-0 group-hover:opacity-100 transition-all pointer-events-none whitespace-nowrap border-2 border-brandOrange translate-x-4 group-hover:translate-x-0">
-               QUERO MEU DIPLOMA HOJE!
-            </span>
+            <MessageCircle size={40} className="fill-white" />
+            <div className="absolute -top-1 -right-1 w-7 h-7 bg-red-600 rounded-full border-2 border-white flex items-center justify-center text-[10px] font-black animate-pulse">1</div>
          </button>
-         <a 
-           href="https://wa.me/5531973276886" 
-           target="_blank" 
-           rel="noopener noreferrer"
-           className="bg-green-500 text-white p-7 rounded-full shadow-3xl hover:scale-110 active:scale-95 transition-all flex items-center justify-center relative group"
-         >
-            <MessageCircle size={36} />
-            <div className="absolute -top-2 -right-2 w-7 h-7 bg-red-600 rounded-full border-4 border-white flex items-center justify-center text-[10px] font-black animate-pulse">1</div>
-            <span className="absolute right-full mr-8 bg-green-50 text-green-700 px-6 py-3 rounded-2xl font-black text-xs shadow-xl opacity-0 group-hover:opacity-100 transition-all pointer-events-none whitespace-nowrap border border-green-200">Consultoria Online</span>
-         </a>
       </div>
 
       <style>{`
@@ -547,7 +464,7 @@ export default function App() {
           to { opacity: 1; transform: scale(1); }
         }
         .animate-fade-in { animation: fade-in 0.3s ease-out forwards; }
-        .shadow-3xl { box-shadow: 0 45px 90px -20px rgba(0, 51, 102, 0.35); }
+        .shadow-3xl { box-shadow: 0 45px 90px -20px rgba(0, 51, 102, 0.45); }
         .animate-shine { animation: shine 1.8s infinite; }
         @keyframes shine {
           0% { left: -100%; }
@@ -555,9 +472,9 @@ export default function App() {
         }
         @keyframes bounce-slow {
           0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-15px); }
+          50% { transform: translateY(-12px); }
         }
-        .animate-bounce-slow { animation: bounce-slow 4s ease-in-out infinite; }
+        .animate-bounce-slow { animation: bounce-slow 5s ease-in-out infinite; }
       `}</style>
     </div>
   );
