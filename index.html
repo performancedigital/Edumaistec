@@ -5,6 +5,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>EdumaisTec | Diploma Técnico por Competência Reconhecido MEC</title>
+    <meta name="description" content="Obtenha seu diploma técnico por competência reconhecido pelo MEC em até 45 dias. Se você tem 1 ano de experiência, valide sua profissão agora.">
+    <meta name="keywords" content="curso técnico por competência, técnico por competência reconhecido pelo MEC, diploma técnico válido, certificação por experiência profissional, regularizar profissão, validar experiência profissional, técnico online reconhecido, diploma técnico rápido">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,6 +27,7 @@
             },
             animation: {
               'shine': 'shine 1.5s ease-in-out infinite',
+              'float': 'float 3s ease-in-out infinite',
             }
           },
         },
@@ -35,7 +38,11 @@
       body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
       h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; }
       .glass { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.2); }
-      .orange-gradient { background: linear-gradient(135deg, #FF6600 0%, #FF8533 100%); }
+      
+      @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+      }
       
       /* Smooth scroll bar */
       ::-webkit-scrollbar { width: 8px; }
