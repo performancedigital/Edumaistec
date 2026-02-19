@@ -141,7 +141,7 @@ export default function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // --- ALERE ESTA LINHA COM A SUA URL DO GITHUB ---
+  // URL DA LOGO NO GITHUB - MANTIDA CONFORME SOLICITADO
   const logoUrl = "https://raw.githubusercontent.com/performancedigital/Edumaistec/main/logo.png"; 
 
   return (
@@ -160,8 +160,10 @@ export default function App() {
               alt="EdumaisTec Logo" 
               className={`transition-all duration-500 group-hover:scale-105 group-hover:rotate-1 object-contain ${isScrolled ? 'h-10 md:h-12' : 'h-14 md:h-16'}`}
               onError={(e) => {
-                (e.target as HTMLImageElement).style.display = 'none';
-                const parent = (e.target as HTMLElement).parentElement;
+                // Previne loop infinito e mostra texto se a imagem falhar
+                const target = e.target as HTMLImageElement;
+                target.style.display = 'none';
+                const parent = target.parentElement;
                 if (parent && !parent.querySelector('.fallback-text')) {
                   const span = document.createElement('span');
                   span.className = 'fallback-text text-navy font-black text-xl tracking-tighter uppercase';
@@ -257,7 +259,7 @@ export default function App() {
           </div>
         </section>
 
-        {/* Especialidades */}
+        {/* Cursos */}
         <section id="cursos" className="py-20 md:py-32 bg-white relative">
           <div className="container mx-auto px-4">
             <Reveal className="text-center mb-16 md:mb-24">
@@ -297,43 +299,7 @@ export default function App() {
                 </Reveal>
               ))}
             </div>
-
-            <Reveal className="text-center">
-              <button 
-                onClick={openModal}
-                className="bg-brandOrange text-white px-10 md:px-16 py-6 md:py-7 rounded-[2rem] font-black text-lg md:text-xl hover:scale-105 active:scale-95 transition-all shadow-3xl shadow-brandOrange/30 uppercase tracking-tighter flex items-center mx-auto"
-              >
-                VER LISTA COMPLETA DE CURSOS <ChevronDown className="ml-3" />
-              </button>
-            </Reveal>
           </div>
-        </section>
-
-        {/* FAQ */}
-        <section id="faq" className="py-16 md:py-32 bg-white">
-           <div className="container mx-auto px-4 max-w-5xl">
-              <Reveal className="text-center mb-16 md:mb-20">
-                 <h2 className="text-4xl md:text-7xl text-navy font-title tracking-tighter uppercase mb-6 leading-none">Principais <span className="text-brandOrange">Dúvidas</span></h2>
-                 <p className="text-gray-500 font-medium text-lg md:text-xl">Esclareça suas incertezas e dê o próximo passo na sua carreira.</p>
-              </Reveal>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-                 {[
-                   { q: "O diploma é igual ao de quem fez o curso?", a: "Sim. O documento é emitido por escola técnica credenciada e não informa se foi por competência ou regular. Validade jurídica absoluta." },
-                   { q: "Posso me registrar nos conselhos?", a: "Sim! O diploma é oficial e registrado no MEC, o que garante o direito ao registro profissional nos conselhos de classe." },
-                   { q: "Qual o tempo médio do processo?", a: "A partir do envio da documentação e da realização da prova, são 48 horas úteis para emissão do diploma." },
-                   { q: "Preciso comprovar quanto tempo?", a: "É necessário comprovar no mínimo 1 ano de experiência profissional na área técnica desejada." }
-                 ].map((f, i) => (
-                   <Reveal key={i} delay={i * 100}>
-                      <div onClick={openModal} className="group border-2 border-gray-100 rounded-[2rem] md:rounded-[2.5rem] p-8 md:p-10 hover:border-brandOrange hover:bg-brandLight transition-all cursor-pointer h-full">
-                         <h4 className="text-navy font-black text-xl mb-6 flex items-start">
-                            <HelpCircle className="text-brandOrange mr-4 shrink-0 mt-1" size={24} /> {f.q}
-                         </h4>
-                         <p className="text-gray-600 font-medium leading-relaxed text-base">{f.a}</p>
-                      </div>
-                   </Reveal>
-                 ))}
-              </div>
-           </div>
         </section>
 
         {/* Contato */}
@@ -359,43 +325,47 @@ export default function App() {
         </section>
       </main>
 
-      {/* Footer Ajustado */}
-      <footer className="bg-navy text-white py-20 border-t border-white/5">
-        <div className="container mx-auto px-4 text-center">
+      {/* Footer - Ajustado com CNPJ e Logo Oficial */}
+      <footer className="bg-navy text-white py-20 border-t border-white/5 relative overflow-hidden">
+        <div className="container mx-auto px-4 text-center relative z-10">
           <div className="flex flex-col items-center justify-center mb-12">
              <img 
                src={logoUrl} 
                alt="EdumaisTec Logo Rodapé" 
-               className="h-20 md:h-28 brightness-110 contrast-125 mb-8 object-contain"
+               className="h-20 md:h-28 mb-8 object-contain"
                onError={(e) => {
-                 (e.target as HTMLImageElement).style.display = 'none';
-                 const parent = (e.target as HTMLElement).parentElement;
+                 const target = e.target as HTMLImageElement;
+                 target.style.display = 'none';
+                 const parent = target.parentElement;
                  if (parent && !parent.querySelector('.footer-fallback')) {
                     const div = document.createElement('div');
-                    div.className = 'footer-fallback text-white font-black text-3xl mb-4 tracking-tighter';
+                    div.className = 'footer-fallback text-white font-black text-4xl mb-4 tracking-tighter uppercase';
                     div.innerHTML = 'EDU<span class="text-brandOrange">MAIS</span>TEC';
                     parent.prepend(div);
                  }
                }}
              />
-             <div className="bg-white/5 px-6 py-2 rounded-full border border-white/10">
-                <p className="text-[11px] text-white/60 font-bold uppercase tracking-[0.2em]">
+             <div className="inline-block bg-white/10 px-8 py-3 rounded-2xl border border-white/10 backdrop-blur-sm shadow-xl">
+                <p className="text-[12px] md:text-sm text-white/90 font-black uppercase tracking-[0.2em]">
                   CNPJ: 63.111.623/0001-51
                 </p>
              </div>
           </div>
           
-          <div className="max-w-2xl mx-auto mb-10">
-             <p className="text-white/30 text-[10px] md:text-xs leading-relaxed uppercase tracking-widest font-medium">
-               A EdumaisTec é uma instituição dedicada à aceleração de carreiras através da certificação técnica por competência, em total conformidade com a Lei de Diretrizes e Bases da Educação Nacional (LDB).
+          <div className="max-w-3xl mx-auto mb-12">
+             <p className="text-white/40 text-[10px] md:text-xs leading-relaxed uppercase tracking-[0.15em] font-bold">
+               A EdumaisTec é uma instituição de vanguarda focada no reconhecimento de competências profissionais. <br className="hidden md:block" /> 
+               Todos os diplomas emitidos por nossas parceiras são registrados no SISTEC/MEC e possuem validade nacional plena.
              </p>
           </div>
 
-          <div className="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-10" />
+          <div className="w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent mb-12" />
 
-          <p className="text-[10px] text-white/20 font-black uppercase tracking-[0.5em]">
-            © {new Date().getFullYear()} EDUMAISTEC • Todos os direitos reservados
-          </p>
+          <div className="flex flex-col md:flex-row items-center justify-center gap-6 text-[10px] text-white/20 font-black uppercase tracking-[0.4em]">
+            <span>© {new Date().getFullYear()} EDUMAISTEC</span>
+            <span className="hidden md:block opacity-30">|</span>
+            <span>Todos os direitos reservados</span>
+          </div>
         </div>
       </footer>
 
