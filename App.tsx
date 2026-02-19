@@ -177,93 +177,93 @@ export default function App() {
       </header>
 
       <main className="flex-grow">
-        {/* Hero Section */}
-        <section id="início" className="relative bg-navy pt-56 pb-32 md:pt-80 md:pb-56 overflow-hidden">
+        {/* Hero Section - Ajuste de espaçamento superior conforme solicitado */}
+        <section id="início" className="relative bg-navy pt-24 pb-20 md:pt-32 md:pb-40 overflow-hidden">
           <div className="absolute inset-0 pointer-events-none">
             <div className="absolute top-1/4 -right-20 w-[600px] h-[600px] bg-brandOrange/20 rounded-full blur-[150px] animate-pulse"></div>
             <div className="absolute -bottom-24 -left-24 w-[500px] h-[500px] bg-brandBlueLight/30 rounded-full blur-[100px]"></div>
           </div>
           
           <div className="container mx-auto px-4 relative z-10">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
               <Reveal>
                 <div className="inline-flex items-center bg-white/5 border border-white/10 text-brandOrange px-6 py-2 rounded-full font-bold text-xs mb-8 tracking-[0.2em] uppercase backdrop-blur-md">
                   <Zap size={16} className="mr-2 fill-brandOrange" /> Transforme experiência em reconhecimento
                 </div>
-                <h1 className="text-5xl md:text-8xl font-title text-white mb-8 leading-[1] tracking-tighter">
+                <h1 className="text-4xl sm:text-5xl md:text-8xl font-title text-white mb-8 leading-[1.1] tracking-tighter">
                   Sua experiência de 1 ano vale um <span className="text-brandOrange italic underline decoration-white/20">Diploma Técnico</span>
                 </h1>
-                <p className="text-white/80 text-xl md:text-2xl mb-12 max-w-xl font-medium leading-relaxed">
+                <p className="text-white/80 text-lg md:text-2xl mb-12 max-w-xl font-medium leading-relaxed">
                   Sem provas longas. Sem aulas desnecessárias. Valide seu conhecimento profissional pelo MEC e conquiste o registro oficial no <span className="text-white font-bold underline decoration-brandOrange">SISTEC</span> agora.
                 </p>
                 
                 <div className="flex flex-col sm:flex-row gap-5">
                   <button 
                     onClick={openModal}
-                    className="group bg-brandOrange text-white px-12 py-7 rounded-2xl font-black text-xl hover:brightness-110 transition-all text-center shadow-3xl shadow-brandOrange/30 flex items-center justify-center relative overflow-hidden"
+                    className="group bg-brandOrange text-white px-10 md:px-12 py-6 md:py-7 rounded-2xl font-black text-lg md:text-xl hover:brightness-110 transition-all text-center shadow-3xl shadow-brandOrange/30 flex items-center justify-center relative overflow-hidden"
                   >
                     <span className="relative z-10 flex items-center uppercase tracking-tight">CONQUISTAR MEU DIPLOMA <ArrowRight className="ml-3 group-hover:translate-x-2 transition-transform" /></span>
                     <div className="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-30 group-hover:animate-shine" />
                   </button>
                 </div>
 
-                <div className="mt-12 flex flex-wrap gap-10 opacity-60">
+                <div className="mt-12 flex flex-wrap gap-6 md:gap-10 opacity-60">
                   <div className="flex items-center text-white text-[10px] font-black uppercase tracking-widest"><CheckCircle size={18} className="mr-3 text-brandOrange" /> Reconhecido MEC</div>
                   <div className="flex items-center text-white text-[10px] font-black uppercase tracking-widest"><CheckCircle size={18} className="mr-3 text-brandOrange" /> Válido p/ Concursos</div>
                   <div className="flex items-center text-white text-[10px] font-black uppercase tracking-widest"><CheckCircle size={18} className="mr-3 text-brandOrange" /> Registro no SISTEC</div>
                 </div>
               </Reveal>
 
-              <div className="relative">
+              <div className="relative mt-8 lg:mt-0">
                 <Reveal delay={200} className="relative z-10">
-                  <div className="bg-white/10 backdrop-blur-xl p-12 rounded-[3.5rem] border border-white/20 shadow-3xl">
-                    <div className="grid grid-cols-2 gap-10">
+                  <div className="bg-white/10 backdrop-blur-xl p-8 md:p-10 rounded-[2.5rem] md:rounded-[3.5rem] border border-white/20 shadow-3xl">
+                    <div className="grid grid-cols-2 gap-6 md:gap-10">
                       <div className="text-center">
-                        <p className="text-5xl md:text-6xl font-black text-brandOrange mb-2 tracking-tighter">100%</p>
-                        <p className="text-white/60 text-[10px] font-bold uppercase tracking-widest">Legalidade (LDB)</p>
+                        <p className="text-3xl sm:text-4xl md:text-5xl font-black text-brandOrange mb-2 tracking-tighter">100%</p>
+                        <p className="text-white/60 text-[9px] md:text-[10px] font-bold uppercase tracking-widest">Legalidade (LDB)</p>
                       </div>
                       <div className="text-center">
-                        <p className="text-5xl md:text-6xl font-black text-brandOrange mb-2 tracking-tighter">45</p>
-                        <p className="text-white/60 text-[10px] font-bold uppercase tracking-widest">Dias Médios</p>
+                        <p className="text-3xl sm:text-4xl md:text-5xl font-black text-brandOrange mb-2 tracking-tighter">48h</p>
+                        <p className="text-white/60 text-[9px] md:text-[10px] font-bold uppercase tracking-widest">diploma em mãos</p>
                       </div>
                       <div className="text-center">
-                        <p className="text-5xl md:text-6xl font-black text-brandOrange mb-2 tracking-tighter">CONSELHO</p>
-                        <p className="text-white/60 text-[10px] font-bold uppercase tracking-widest">Registro Profissional</p>
+                        <p className="text-3xl sm:text-4xl md:text-5xl font-black text-brandOrange mb-2 tracking-tighter uppercase">Conselho</p>
+                        <p className="text-white/60 text-[9px] md:text-[10px] font-bold uppercase tracking-widest">Registro Profissional</p>
                       </div>
                       <div className="text-center">
-                        <p className="text-5xl md:text-6xl font-black text-brandOrange mb-2 tracking-tighter">MEC</p>
-                        <p className="text-white/60 text-[10px] font-bold uppercase tracking-widest">Validade Nacional</p>
+                        <p className="text-3xl sm:text-4xl md:text-5xl font-black text-brandOrange mb-2 tracking-tighter">SISTEC/MEC</p>
+                        <p className="text-white/60 text-[9px] md:text-[10px] font-bold uppercase tracking-widest">Validade Nacional</p>
                       </div>
                     </div>
                   </div>
                 </Reveal>
-                <div className="absolute -z-10 -top-12 -right-12 w-64 h-64 bg-brandOrange/30 rounded-full blur-[100px]"></div>
+                <div className="absolute -z-10 -top-8 -right-8 w-48 h-48 bg-brandOrange/30 rounded-full blur-[80px]"></div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Especialidades */}
-        <section id="cursos" className="py-24 bg-white relative">
+        {/* Especialidades Reordenadas */}
+        <section id="cursos" className="py-16 md:py-24 bg-white relative">
           <div className="container mx-auto px-4">
-            <Reveal className="text-center mb-24">
+            <Reveal className="text-center mb-16 md:mb-24">
               <span className="text-[10px] font-black text-brandOrange bg-brandOrange/5 px-6 py-2 rounded-full uppercase tracking-[0.3em] mb-6 inline-block">As formações que o mercado exige</span>
               <h2 className="text-4xl md:text-7xl text-navy mb-8 font-title tracking-tighter uppercase leading-none">Nossas <span className="text-brandOrange underline decoration-4 underline-offset-8">Especialidades</span></h2>
-              <p className="text-gray-500 max-w-2xl mx-auto text-xl font-medium leading-relaxed">
+              <p className="text-gray-500 max-w-2xl mx-auto text-lg md:text-xl font-medium leading-relaxed">
                 Pare de perder promoções por falta de diploma. Escolha sua área de atuação e regularize sua profissão hoje mesmo.
               </p>
             </Reveal>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-20">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 mb-20">
               {[
-                { icon: Stethoscope, title: "Técnico em Enfermagem", desc: "Fundamental para quem atua em hospitais e clínicas e precisa do registro no COREN.", tag: "Alta Demanda" },
-                { icon: Building2, title: "Transações Imobiliárias", desc: "O passo obrigatório para quem deseja obter o CRECI e atuar como corretor legalizado.", tag: "Acesso ao CRECI" },
-                { icon: Activity, title: "Automação Industrial", desc: "Valide sua competência em sistemas industriais e garanta melhores cargos na indústria.", tag: "Setor Industrial" },
                 { icon: ShieldCheck, title: "Segurança do Trabalho", desc: "Profissional indispensável em qualquer empresa. Garanta sua titulação oficial.", tag: "Mandatório" },
+                { icon: Activity, title: "Automação Industrial", desc: "Valide sua competência em sistemas industriais e garanta melhores cargos na indústria.", tag: "Setor Industrial" },
+                { icon: Building2, title: "Transações Imobiliárias", desc: "O passo obrigatório para quem deseja obter o CRECI e atuar como corretor legalizado.", tag: "Acesso ao CRECI" },
                 { icon: Thermometer, title: "Refrigeração e Climatização", desc: "Especialize-se na área que mais cresce no setor de serviços prediais e industriais.", tag: "Serviços Técnicos" },
+                { icon: Stethoscope, title: "Técnico em Enfermagem", desc: "Fundamental para quem atua em hospitais e clínicas.", tag: "Alta Demanda" },
               ].map((c, i) => (
                 <Reveal key={i} delay={i * 100}>
-                  <div className="bg-brandLight p-10 rounded-[3rem] border-2 border-transparent hover:border-brandOrange hover:bg-white hover:shadow-3xl transition-all duration-500 group relative flex flex-col h-full overflow-hidden">
+                  <div className="bg-brandLight p-8 md:p-10 rounded-[2.5rem] md:rounded-[3rem] border-2 border-transparent hover:border-brandOrange hover:bg-white hover:shadow-3xl transition-all duration-500 group relative flex flex-col h-full overflow-hidden">
                     <div className="absolute top-0 right-0 w-24 h-24 bg-brandOrange/10 rounded-bl-[4rem] transform translate-x-8 -translate-y-8 group-hover:translate-x-4 group-hover:-translate-y-4 transition-transform duration-500"></div>
                     <div className="mb-10 relative z-10 flex justify-between items-start">
                       <div className="bg-navy text-white p-5 rounded-2xl group-hover:bg-brandOrange transition-colors shadow-lg shadow-navy/10">
@@ -287,7 +287,7 @@ export default function App() {
             <Reveal className="text-center">
               <button 
                 onClick={openModal}
-                className="bg-brandOrange text-white px-16 py-7 rounded-[2rem] font-black text-xl hover:scale-105 active:scale-95 transition-all shadow-3xl shadow-brandOrange/30 uppercase tracking-tighter flex items-center mx-auto"
+                className="bg-brandOrange text-white px-10 md:px-16 py-6 md:py-7 rounded-[2rem] font-black text-lg md:text-xl hover:scale-105 active:scale-95 transition-all shadow-3xl shadow-brandOrange/30 uppercase tracking-tighter flex items-center mx-auto"
               >
                 VER LISTA COMPLETA DE CURSOS <ChevronDown className="ml-3" />
               </button>
@@ -296,12 +296,12 @@ export default function App() {
         </section>
 
         {/* Autoridade & Legalidade */}
-        <section id="certificacao" className="py-32 bg-navy relative overflow-hidden">
+        <section id="certificacao" className="py-20 md:py-32 bg-navy relative overflow-hidden">
            <div className="absolute inset-0 opacity-10 pointer-events-none">
              <Building2 className="absolute -left-20 -bottom-20 w-96 h-96 transform -rotate-12" />
            </div>
            <div className="container mx-auto px-4 relative z-10">
-             <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
                <Reveal>
                  <span className="text-brandOrange font-black text-xs uppercase tracking-[0.4em] mb-8 inline-block">Certificação Federal</span>
                  <h2 className="text-4xl md:text-7xl text-white font-title mb-10 leading-[0.9] tracking-tighter uppercase">Diploma <span className="text-brandOrange">Válido & Seguro</span> Conforme a LDB</h2>
@@ -329,7 +329,7 @@ export default function App() {
                </Reveal>
                <div className="relative">
                  <Reveal delay={200}>
-                   <div className="bg-white/5 backdrop-blur-2xl p-14 rounded-[4rem] border border-white/10 shadow-3xl">
+                   <div className="bg-white/5 backdrop-blur-2xl p-10 md:p-14 rounded-[3rem] md:rounded-[4rem] border border-white/10 shadow-3xl">
                      <div className="flex flex-col space-y-10">
                        <div className="flex items-start group">
                          <div className="bg-brandOrange/20 p-5 rounded-2xl mr-8 group-hover:bg-brandOrange transition-colors">
@@ -362,22 +362,22 @@ export default function App() {
            </div>
         </section>
 
-        {/* FAQ Persuasivo */}
-        <section id="faq" className="py-32 bg-white">
+        {/* FAQ - Ajuste de textos solicitado */}
+        <section id="faq" className="py-16 md:py-32 bg-white">
            <div className="container mx-auto px-4 max-w-5xl">
-              <Reveal className="text-center mb-20">
+              <Reveal className="text-center mb-16 md:mb-20">
                  <h2 className="text-4xl md:text-7xl text-navy font-title tracking-tighter uppercase mb-6 leading-none">Principais <span className="text-brandOrange">Dúvidas</span></h2>
-                 <p className="text-gray-500 font-medium text-xl">Esclareça suas incertezas e dê o próximo passo na sua carreira.</p>
+                 <p className="text-gray-500 font-medium text-lg md:text-xl">Esclareça suas incertezas e dê o próximo passo na sua carreira.</p>
               </Reveal>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                  {[
                    { q: "O diploma é igual ao de quem fez o curso?", a: "Sim. O documento é emitido por escola técnica credenciada e não informa se foi por competência ou regular. Validade jurídica absoluta." },
-                   { q: "Posso me registrar no COREN ou CRECI?", a: "Sim! O diploma é oficial e registrado no MEC, o que garante o direito ao registro profissional nos conselhos de classe." },
-                   { q: "Qual o tempo médio do processo?", a: "Do envio da documentação até a emissão do diploma, o tempo médio é de 45 dias úteis." },
+                   { q: "Posso me registrar nos conselhos?", a: "Sim! O diploma é oficial e registrado no MEC, o que garante o direito ao registro profissional nos conselhos de classe." },
+                   { q: "Qual o tempo médio do processo?", a: "A partir do envio da documentação e da realização da prova, são 48 horas úteis para emissão do diploma." },
                    { q: "Preciso comprovar quanto tempo?", a: "É necessário comprovar no mínimo 1 ano de experiência profissional na área técnica desejada." }
                  ].map((f, i) => (
                    <Reveal key={i} delay={i * 100}>
-                      <div onClick={openModal} className="group border-2 border-gray-100 rounded-[2.5rem] p-10 hover:border-brandOrange hover:bg-brandLight transition-all cursor-pointer h-full">
+                      <div onClick={openModal} className="group border-2 border-gray-100 rounded-[2rem] md:rounded-[2.5rem] p-8 md:p-10 hover:border-brandOrange hover:bg-brandLight transition-all cursor-pointer h-full">
                          <h4 className="text-navy font-black text-xl mb-6 flex items-start">
                             <HelpCircle className="text-brandOrange mr-4 shrink-0 mt-1" size={24} /> {f.q}
                          </h4>
@@ -390,10 +390,10 @@ export default function App() {
         </section>
 
         {/* CTA Final */}
-        <section className="py-32 bg-brandOrange relative overflow-hidden">
+        <section className="py-20 md:py-32 bg-brandOrange relative overflow-hidden">
            <div className="container mx-auto px-4 text-center relative z-10">
               <Reveal>
-                 <h2 className="text-5xl md:text-8xl text-white font-black mb-12 leading-none tracking-tighter uppercase italic">
+                 <h2 className="text-4xl md:text-8xl text-white font-black mb-12 leading-none tracking-tighter uppercase italic">
                    VALIDE SUA EXPERIÊNCIA <br className="hidden md:block"/> E MUDE DE VIDA!
                  </h2>
                  <p className="text-white/80 text-xl md:text-3xl mb-16 font-medium max-w-4xl mx-auto">
@@ -401,7 +401,7 @@ export default function App() {
                  </p>
                  <button 
                   onClick={openModal}
-                  className="bg-navy text-white px-16 py-8 rounded-[2.5rem] font-black text-2xl hover:bg-brandBlueLight hover:scale-105 active:scale-95 transition-all shadow-3xl shadow-navy/30 uppercase tracking-tight"
+                  className="bg-navy text-white px-10 md:px-16 py-6 md:py-8 rounded-[2rem] md:rounded-[2.5rem] font-black text-xl md:text-2xl hover:bg-brandBlueLight hover:scale-105 active:scale-95 transition-all shadow-3xl shadow-navy/30 uppercase tracking-tight"
                  >
                     SOLICITAR ANÁLISE GRATUITA AGORA
                  </button>
@@ -409,17 +409,17 @@ export default function App() {
            </div>
         </section>
 
-        {/* Localização & Contato */}
-        <section id="contato" className="py-24 bg-brandLight">
+        {/* Localização & Contato - Ajuste de texto solicitado */}
+        <section id="contato" className="py-16 md:py-24 bg-brandLight">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
                {[
-                 { icon: MessageCircle, title: "Central WhatsApp", val: "(31) 97327-6886", color: "text-green-500" },
+                 { icon: MessageCircle, title: "Central WhatsApp", val: "", color: "text-green-500" },
                  { icon: Mail, title: "E-mail Atendimento", val: "edumaistecoficial@gmail.com", color: "text-red-500" },
                  { icon: Instagram, title: "Nosso Instagram", val: "@edumaistec", color: "text-pink-500" },
                  { icon: MapPin, title: "Sede Administrativa", val: "Cel. Fabriciano - MG", color: "text-navy" }
                ].map((c, i) => (
-                 <div key={i} onClick={openModal} className="bg-white p-10 rounded-[2.5rem] border border-gray-100 text-center hover:shadow-2xl transition-all group cursor-pointer">
+                 <div key={i} onClick={openModal} className="bg-white p-8 md:p-10 rounded-[2rem] md:rounded-[2.5rem] border border-gray-100 text-center hover:shadow-2xl transition-all group cursor-pointer">
                     <div className="w-16 h-16 bg-brandLight rounded-2xl flex items-center justify-center mx-auto mb-8 group-hover:rotate-12 transition-transform shadow-inner">
                        <c.icon className={c.color} size={32} />
                     </div>
@@ -447,14 +447,14 @@ export default function App() {
         </div>
       </footer>
 
-      {/* Persistent Sticky WhatsApp Button - Just the official logo, triggering modal */}
-      <div className="fixed bottom-10 right-10 z-[100]">
+      {/* Persistent Sticky WhatsApp Button */}
+      <div className="fixed bottom-6 right-6 md:bottom-10 md:right-10 z-[100]">
          <button 
            onClick={openModal}
-           className="bg-[#25D366] text-white p-5 rounded-full shadow-3xl hover:scale-110 active:scale-95 transition-all group animate-bounce-slow flex items-center justify-center"
+           className="bg-[#25D366] text-white p-4 md:p-5 rounded-full shadow-3xl hover:scale-110 active:scale-95 transition-all group animate-bounce-slow flex items-center justify-center"
          >
-            <MessageCircle size={40} className="fill-white" />
-            <div className="absolute -top-1 -right-1 w-7 h-7 bg-red-600 rounded-full border-2 border-white flex items-center justify-center text-[10px] font-black animate-pulse">1</div>
+            <MessageCircle size={36} md:size={40} className="fill-white" />
+            <div className="absolute -top-1 -right-1 w-6 h-6 md:w-7 md:h-7 bg-red-600 rounded-full border-2 border-white flex items-center justify-center text-[10px] font-black animate-pulse">1</div>
          </button>
       </div>
 
