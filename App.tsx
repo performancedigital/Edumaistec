@@ -39,6 +39,7 @@ interface RevealProps {
   children?: React.ReactNode;
   className?: string;
   delay?: number;
+  // Fixing error: Type '{ key: number; delay: number; }' is not assignable to type 'RevealProps'.
   key?: React.Key;
 }
 
@@ -51,15 +52,14 @@ const LeadModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Disparar evento de Lead para o Meta Pixel (Garante o rastreio da conversão)
+    // Disparar evento de Lead para o Meta Pixel
     if (typeof (window as any).fbq === 'function') {
       (window as any).fbq('track', 'Lead');
     }
 
-    // URL de redirecionamento atualizada conforme solicitado: hubrhino + utm_campaign=vendas
+    // URL de redirecionamento solicitada: hubrhino + utm_campaign=vendas
     const redirectUrl = `https://hubrhino.rhinocrm.com.br/redirect-form?campaign=meta-lp-12x89-90&utm_source=meta&utm_campaign=vendas&nome=${encodeURIComponent(formData.name)}&whatsapp=${encodeURIComponent(formData.whatsapp)}`;
     
-    // Abrir o link em nova aba
     window.open(redirectUrl, '_blank');
     onClose();
   };
@@ -124,7 +124,7 @@ const LeadModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }
 };
 
 // --- Custom Hooks ---
-const useIntersectionObserver = (options = {}) => {
+const useIntersectionObserver = (options: IntersectionObserverInit = {}) => {
   const [isIntersecting, setIsIntersecting] = useState(false);
   const targetRef = useRef<HTMLDivElement>(null);
 
@@ -211,12 +211,11 @@ export default function App() {
             />
           </div>
           <nav className="hidden lg:flex items-center space-x-10 text-navy font-bold text-sm tracking-tight">
-            {['Início', 'Cursos', 'Certificação', 'FAQ', 'Contato'].map((item) => (
-              <a key={item} href={`#${item.toLowerCase()}`} className="relative hover:text-brandOrange transition-colors group">
-                {item}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-brandOrange transition-all duration-300 group-hover:w-full"></span>
-              </a>
-            ))}
+            <a href="#início" className="relative hover:text-brandOrange transition-colors group">Início</a>
+            <a href="#cursos" className="relative hover:text-brandOrange transition-colors group">Cursos</a>
+            <a href="#certificacao" className="relative hover:text-brandOrange transition-colors group">Certificação</a>
+            <a href="#faq" className="relative hover:text-brandOrange transition-colors group">FAQ</a>
+            <a href="#contato" className="relative hover:text-brandOrange transition-colors group">Contato</a>
           </nav>
           <button 
             onClick={openModal}
@@ -271,291 +270,120 @@ export default function App() {
                 <Reveal delay={200} className="relative z-10">
                   <div className="bg-white/10 backdrop-blur-xl p-10 md:p-14 lg:p-12 xl:p-16 rounded-[3rem] md:rounded-[4rem] border border-white/20 shadow-3xl">
                     <div className="grid grid-cols-2 gap-8 md:gap-10 lg:gap-12">
-                      <div className="text-center flex flex-col justify-center">
+                      <div className="text-center">
                         <p className="text-2xl sm:text-3xl md:text-5xl font-black text-brandOrange mb-3 tracking-tighter">100%</p>
                         <p className="text-white/60 text-[9px] md:text-[11px] font-bold uppercase tracking-widest leading-tight">Legalidade (LDB)</p>
                       </div>
-                      <div className="text-center flex flex-col justify-center">
+                      <div className="text-center">
                         <p className="text-2xl sm:text-3xl md:text-5xl font-black text-brandOrange mb-3 tracking-tighter">48h</p>
                         <p className="text-white/60 text-[9px] md:text-[11px] font-bold uppercase tracking-widest leading-tight">diploma em mãos</p>
                       </div>
-                      <div className="text-center flex flex-col justify-center">
+                      <div className="text-center">
                         <p className="text-2xl sm:text-3xl md:text-5xl font-black text-brandOrange mb-3 tracking-tighter uppercase leading-none">Conselho</p>
                         <p className="text-white/60 text-[9px] md:text-[11px] font-bold uppercase tracking-widest leading-tight">Registro Profissional</p>
                       </div>
-                      <div className="text-center flex flex-col justify-center">
+                      <div className="text-center">
                         <p className="text-2xl sm:text-3xl md:text-5xl font-black text-brandOrange mb-3 tracking-tighter leading-none">SISTEC/MEC</p>
                         <p className="text-white/60 text-[9px] md:text-[11px] font-bold uppercase tracking-widest leading-tight">Validade Nacional</p>
                       </div>
                     </div>
                   </div>
                 </Reveal>
-                <div className="absolute -z-10 -top-12 -right-12 w-64 h-64 bg-brandOrange/30 rounded-full blur-[100px]"></div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Cursos */}
+        {/* Especialidades */}
         <section id="cursos" className="py-20 md:py-32 bg-white relative">
-          <div className="container mx-auto px-4">
-            <Reveal className="text-center mb-16 md:mb-24">
-              <span className="text-[10px] font-black text-brandOrange bg-brandOrange/5 px-6 py-2 rounded-full uppercase tracking-[0.3em] mb-6 inline-block">As formações que o mercado exige</span>
-              <h2 className="text-4xl md:text-7xl text-navy mb-8 font-title tracking-tighter uppercase leading-none">Nossas <span className="text-brandOrange underline decoration-4 underline-offset-8">Especialidades</span></h2>
-              <p className="text-gray-500 max-w-2xl mx-auto text-lg md:text-xl font-medium leading-relaxed">
-                Pare de perder promoções por falta de diploma. Escolha sua área de atuação e regularize sua profissão hoje mesmo.
-              </p>
+          <div className="container mx-auto px-4 text-center mb-16">
+            <Reveal>
+              <h2 className="text-4xl md:text-7xl text-navy mb-8 font-title tracking-tighter uppercase leading-none">Nossas <span className="text-brandOrange">Especialidades</span></h2>
+              <p className="text-gray-500 max-w-2xl mx-auto text-lg md:text-xl font-medium">Pare de perder promoções por falta de diploma.</p>
             </Reveal>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 mb-20">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
               {[
-                { icon: ShieldCheck, title: "Segurança do Trabalho", desc: "Profissional indispensável em qualquer empresa. Garanta sua titulação oficial.", tag: "Mandatório" },
-                { icon: Activity, title: "Automação Industrial", desc: "Valide sua competência em sistemas industriais e garanta melhores cargos na indústria.", tag: "Setor Industrial" },
-                { icon: Building2, title: "Transações Imobiliárias", desc: "O passo obrigatório para quem deseja obter o CRECI e atuar como corretor legalizado.", tag: "Acesso ao CRECI" },
-                { icon: Thermometer, title: "Refrigeração e Climatização", desc: "Especialize-se na área que mais cresce no setor de serviços prediais e industriais.", tag: "Serviços Técnicos" },
-                { icon: Stethoscope, title: "Técnico em Enfermagem", desc: "Fundamental para quem atua em hospitais e clínicas.", tag: "Alta Demanda" },
+                { icon: ShieldCheck, title: "Segurança do Trabalho", desc: "Profissional indispensável. Garanta sua titulação oficial." },
+                { icon: Activity, title: "Automação Industrial", desc: "Valide sua competência em sistemas industriais." },
+                { icon: Building2, title: "Transações Imobiliárias", desc: "O passo obrigatório para obter o CRECI." },
+                { icon: Thermometer, title: "Refrigeração", desc: "Especialize-se na área que mais cresce no setor predial." },
+                { icon: Stethoscope, title: "Técnico em Enfermagem", desc: "Fundamental para quem já atua na saúde." },
+                { icon: Wrench, title: "Mecânica Industrial", desc: "Regularize sua atuação nas grandes indústrias." },
               ].map((c, i) => (
                 <Reveal key={i} delay={i * 100}>
-                  <div className="bg-brandLight p-8 md:p-10 rounded-[2.5rem] md:rounded-[3rem] border-2 border-transparent hover:border-brandOrange hover:bg-white hover:shadow-3xl transition-all duration-500 group relative flex flex-col h-full overflow-hidden">
-                    <div className="absolute top-0 right-0 w-24 h-24 bg-brandOrange/10 rounded-bl-[4rem] transform translate-x-8 -translate-y-8 group-hover:translate-x-4 group-hover:-translate-y-4 transition-transform duration-500"></div>
-                    <div className="mb-10 relative z-10 flex justify-between items-start">
-                      <div className="bg-navy text-white p-5 rounded-2xl group-hover:bg-brandOrange transition-colors shadow-lg shadow-navy/10">
-                        <c.icon size={28} />
-                      </div>
-                      <span className="text-[9px] font-black bg-brandOrange text-white px-4 py-1.5 rounded-full uppercase tracking-widest shadow-md">{c.tag}</span>
+                  <div onClick={openModal} className="bg-brandLight p-10 rounded-[2.5rem] border-2 border-transparent hover:border-brandOrange hover:bg-white hover:shadow-3xl transition-all cursor-pointer group">
+                    <div className="bg-navy text-white p-5 rounded-2xl w-fit mb-8 group-hover:bg-brandOrange transition-colors">
+                      <c.icon size={28} />
                     </div>
-                    <h4 className="text-2xl font-black text-navy mb-5 leading-tight group-hover:text-brandOrange transition-colors">{c.title}</h4>
-                    <p className="text-gray-500 text-base font-medium leading-relaxed mb-10 flex-grow">{c.desc}</p>
-                    <button 
-                      onClick={openModal}
-                      className="w-full bg-navy text-white py-5 rounded-2xl font-bold text-xs uppercase tracking-widest hover:bg-brandBlueLight transition-all flex items-center justify-center group/btn shadow-xl shadow-navy/10"
-                    >
-                      VALIDAR AGORA <ArrowUpRight size={16} className="ml-2 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />
-                    </button>
+                    <h4 className="text-2xl font-black text-navy mb-4">{c.title}</h4>
+                    <p className="text-gray-500">{c.desc}</p>
                   </div>
                 </Reveal>
               ))}
             </div>
-            
-            <Reveal className="text-center">
-              <button 
-                onClick={openModal}
-                className="bg-brandOrange text-white px-10 md:px-16 py-6 md:py-7 rounded-[2rem] font-black text-lg md:text-xl hover:scale-105 active:scale-95 transition-all shadow-3xl shadow-brandOrange/30 uppercase tracking-tighter flex items-center mx-auto"
-              >
-                VER LISTA COMPLETA DE CURSOS <ChevronDown className="ml-3" />
-              </button>
-            </Reveal>
           </div>
-        </section>
-
-        {/* Autoridade & Legalidade */}
-        <section id="certificacao" className="py-20 md:py-32 bg-navy relative overflow-hidden">
-           <div className="absolute inset-0 opacity-10 pointer-events-none">
-             <Building2 className="absolute -left-20 -bottom-20 w-96 h-96 transform -rotate-12" />
-           </div>
-           <div className="container mx-auto px-4 relative z-10">
-             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-               <Reveal>
-                 <span className="text-brandOrange font-black text-xs uppercase tracking-[0.4em] mb-8 inline-block">Certificação Federal</span>
-                 <h2 className="text-4xl md:text-7xl text-white font-title mb-10 leading-[0.9] tracking-tighter uppercase">Diploma <span className="text-brandOrange">Válido & Seguro</span> Conforme a LDB</h2>
-                 <p className="text-white/60 text-xl leading-relaxed mb-12 font-medium">
-                   O <span className="text-white font-bold underline decoration-brandOrange underline-offset-4">Artigo 41 da Lei 9.394/96</span> garante que sua prática vale como educação. Não gaste 2 anos estudando o que você já sabe.
-                 </p>
-                 <div className="space-y-6 mb-12">
-                   {[
-                     "Aceito em Concursos Públicos e Processos Seletivos",
-                     "Registro profissional em COREN, CFT, CRECI, etc",
-                     "Autenticidade garantida pelo SISTEC do MEC",
-                     "Válido em todo o território nacional"
-                   ].map((t, i) => (
-                     <div key={i} className="flex items-center text-white/90 font-bold text-lg">
-                       <div className="bg-brandOrange/20 p-2 rounded-lg mr-5">
-                          <Check size={20} className="text-brandOrange" />
-                       </div>
-                       {t}
-                     </div>
-                   ))}
-                 </div>
-                 <button onClick={openModal} className="bg-brandOrange text-white px-12 py-6 rounded-2xl font-black text-lg hover:brightness-110 shadow-3xl shadow-brandOrange/20 transition-all uppercase flex items-center group">
-                    VALIDAR MINHA CARREIRA AGORA <ArrowRight size={20} className="ml-3 group-hover:translate-x-2 transition-transform" />
-                 </button>
-               </Reveal>
-               <div className="relative">
-                 <Reveal delay={200}>
-                   <div className="bg-white/5 backdrop-blur-2xl p-10 md:p-14 rounded-[3rem] md:rounded-[4rem] border border-white/10 shadow-3xl">
-                     <div className="flex flex-col space-y-10">
-                       <div className="flex items-start group">
-                         <div className="bg-brandOrange/20 p-5 rounded-2xl mr-8 group-hover:bg-brandOrange transition-colors">
-                           <Zap className="text-brandOrange group-hover:text-white" size={32} />
-                         </div>
-                         <div>
-                           <h4 className="text-white font-black text-2xl mb-3 tracking-tight">Análise Imediata</h4>
-                           <p className="text-white/40 text-base font-medium">Nossa equipe avalia sua documentação e responde em até 24h úteis sobre sua eligibilidade.</p>
-                         </div>
-                       </div>
-                       <div className="flex items-start group">
-                         <div className="bg-brandOrange/20 p-5 rounded-2xl mr-8 group-hover:bg-brandOrange transition-colors">
-                           <ShieldCheck className="text-brandOrange group-hover:text-white" size={32} />
-                         </div>
-                         <div>
-                           <h4 className="text-white font-black text-2xl mb-3 tracking-tight">Garantia SISTEC</h4>
-                           <p className="text-white/40 text-base font-medium">Após aprovação, seu registro é inserido no portal oficial do MEC para consulta pública imediata.</p>
-                         </div>
-                       </div>
-                       <div className="pt-6">
-                         <button onClick={openModal} className="w-full py-6 bg-white text-navy font-black rounded-3xl hover:bg-brandOrange hover:text-white transition-all uppercase tracking-widest text-sm">
-                            Falar com um Consultor
-                         </button>
-                       </div>
-                     </div>
-                   </div>
-                 </Reveal>
-               </div>
-             </div>
-           </div>
         </section>
 
         {/* FAQ */}
-        <section id="faq" className="py-16 md:py-32 bg-white">
-           <div className="container mx-auto px-4 max-w-5xl">
-              <Reveal className="text-center mb-16 md:mb-20">
-                 <h2 className="text-4xl md:text-7xl text-navy font-title tracking-tighter uppercase mb-6 leading-none">Principais <span className="text-brandOrange">Dúvidas</span></h2>
-                 <p className="text-gray-500 font-medium text-lg md:text-xl">Esclareça suas incertezas e dê o próximo passo na sua carreira.</p>
-              </Reveal>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-                 {[
-                   { q: "O diploma é igual ao de quem fez o curso?", a: "Sim. O documento é emitido por escola técnica credenciada e não informa se foi por competência ou regular. Validade jurídica absoluta." },
-                   { q: "Posso me registrar nos conselhos?", a: "Sim! O diploma é oficial e registrado no MEC, o que garante o direito ao registro profissional nos conselhos de classe." },
-                   { q: "Qual o tempo médio do processo?", a: "A partir do envio da documentação e da realização da prova, são 48 horas úteis para emissão do diploma." },
-                   { q: "Preciso comprovar quanto tempo?", a: "É necessário comprovar no mínimo 1 ano de experiência profissional na área técnica desejada." }
-                 ].map((f, i) => (
-                   <Reveal key={i} delay={i * 100}>
-                      <div onClick={openModal} className="group border-2 border-gray-100 rounded-[2rem] md:rounded-[2.5rem] p-8 md:p-10 hover:border-brandOrange hover:bg-brandLight transition-all cursor-pointer h-full">
-                         <h4 className="text-navy font-black text-xl mb-6 flex items-start">
-                            <HelpCircle className="text-brandOrange mr-4 shrink-0 mt-1" size={24} /> {f.q}
-                         </h4>
-                         <p className="text-gray-600 font-medium leading-relaxed text-base">{f.a}</p>
-                      </div>
-                   </Reveal>
-                 ))}
-              </div>
-           </div>
+        <section id="faq" className="py-16 md:py-32 bg-brandLight">
+          <div className="container mx-auto px-4 max-w-5xl text-center mb-16">
+            <Reveal>
+              <h2 className="text-4xl md:text-7xl text-navy font-title tracking-tighter uppercase mb-6">Principais <span className="text-brandOrange">Dúvidas</span></h2>
+            </Reveal>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12 text-left">
+              {[
+                { q: "O diploma é oficial?", a: "Sim. Emitido por escola credenciada e registrado no SISTEC/MEC com validade nacional plena." },
+                { q: "Quanto tempo demora?", a: "Após a prova e entrega dos documentos, a emissão ocorre em até 48 horas úteis." },
+                { q: "Preciso fazer aulas?", a: "Não. O processo é baseado na Lei 9.394/96 Art. 41, que valida sua experiência profissional." },
+                { q: "Quais os requisitos?", a: "Ter pelo menos 18 anos, Ensino Médio completo e comprovar no mínimo 1 ano de experiência na área." }
+              ].map((f, i) => (
+                <Reveal key={i} delay={i * 100}>
+                  <div onClick={openModal} className="bg-white p-10 rounded-[2rem] border border-gray-100 hover:shadow-xl transition-all cursor-pointer">
+                    <h4 className="text-navy font-black text-xl mb-4 flex items-start">
+                      <HelpCircle className="text-brandOrange mr-4 mt-1" size={20} /> {f.q}
+                    </h4>
+                    <p className="text-gray-600 font-medium">{f.a}</p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
         </section>
 
         {/* CTA Final */}
-        <section className="py-20 md:py-32 bg-brandOrange relative overflow-hidden">
-           <div className="container mx-auto px-4 text-center relative z-10">
-              <Reveal>
-                 <h2 className="text-4xl md:text-8xl text-white font-black mb-12 leading-none tracking-tighter uppercase italic">
-                   VALIDE SUA EXPERIÊNCIA <br className="hidden md:block"/> E MUDE DE VIDA!
-                 </h2>
-                 <p className="text-white/80 text-xl md:text-3xl mb-16 font-medium max-w-4xl mx-auto">
-                   Não perca mais tempo. Regularize sua profissão hoje mesmo e conquiste o salário que você realmente merece.
-                 </p>
-                 <button 
-                  onClick={openModal}
-                  className="bg-navy text-white px-10 md:px-16 py-6 md:py-8 rounded-[2rem] md:rounded-[2.5rem] font-black text-xl md:text-2xl hover:bg-brandBlueLight hover:scale-105 active:scale-95 transition-all shadow-3xl shadow-navy/30 uppercase tracking-tight"
-                 >
-                    SOLICITAR ANÁLISE GRATUITA AGORA
-                 </button>
-              </Reveal>
-           </div>
-        </section>
-
-        {/* Contato */}
-        <section id="contato" className="py-16 md:py-24 bg-brandLight">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-               {[
-                 { icon: MessageCircle, title: "Central WhatsApp", val: "Falar no Chat", color: "text-green-500" },
-                 { icon: Mail, title: "E-mail Atendimento", val: "edumaistecoficial@gmail.com", color: "text-red-500" },
-                 { icon: Instagram, title: "Nosso Instagram", val: "@edumaistec", color: "text-pink-500" },
-                 { icon: MapPin, title: "Sede Administrativa", val: "Cel. Fabriciano - MG", color: "text-navy" }
-               ].map((c, i) => (
-                 <div key={i} onClick={openModal} className="bg-white p-8 md:p-10 rounded-[2rem] md:rounded-[2.5rem] border border-gray-100 text-center hover:shadow-2xl transition-all group cursor-pointer">
-                    <div className="w-16 h-16 bg-brandLight rounded-2xl flex items-center justify-center mx-auto mb-8 group-hover:rotate-12 transition-transform shadow-inner">
-                       <c.icon className={c.color} size={32} />
-                    </div>
-                    <h5 className="font-black text-navy text-sm uppercase tracking-widest mb-3 leading-tight">{c.title}</h5>
-                    <p className="text-gray-500 text-xs font-bold truncate leading-relaxed">{c.val}</p>
-                 </div>
-               ))}
-            </div>
-          </div>
+        <section className="py-20 md:py-32 bg-brandOrange text-center text-white">
+          <Reveal>
+            <h2 className="text-4xl md:text-8xl font-black mb-12 uppercase italic tracking-tighter">MUDE DE VIDA AGORA!</h2>
+            <button onClick={openModal} className="bg-navy text-white px-10 md:px-16 py-6 md:py-8 rounded-[2rem] font-black text-xl hover:scale-105 transition-all shadow-3xl uppercase">
+              SOLICITAR ANÁLISE GRATUITA
+            </button>
+          </Reveal>
         </section>
       </main>
 
       {/* Footer */}
-      <footer className="bg-navy text-white py-20 border-t border-white/5 relative overflow-hidden">
-        <div className="container mx-auto px-4 text-center relative z-10">
-          <div className="flex flex-col items-center justify-center mb-12">
-             <img 
-               src={logoUrl} 
-               alt="EdumaisTec Logo Rodapé" 
-               className="h-20 md:h-28 mb-8 object-contain"
-               onError={(e) => {
-                 const target = e.target as HTMLImageElement;
-                 target.style.display = 'none';
-                 const parent = target.parentElement;
-                 if (parent && !parent.querySelector('.footer-fallback')) {
-                    const div = document.createElement('div');
-                    div.className = 'footer-fallback text-white font-black text-4xl mb-4 tracking-tighter uppercase';
-                    div.innerHTML = 'EDU<span class="text-brandOrange">MAIS</span>TEC';
-                    parent.prepend(div);
-                 }
-               }}
-             />
-             <div className="inline-block bg-white/10 px-8 py-3 rounded-2xl border border-white/10 backdrop-blur-sm shadow-xl">
-                <p className="text-[12px] md:text-sm text-white/90 font-black uppercase tracking-[0.2em]">
-                  CNPJ: 63.111.623/0001-51
-                </p>
-             </div>
+      <footer className="bg-navy text-white py-20">
+        <div className="container mx-auto px-4 text-center">
+          <div className="mb-12">
+            <img src={logoUrl} alt="Logo" className="h-20 mx-auto mb-8 object-contain" />
+            <p className="text-white/40 text-xs font-bold uppercase tracking-widest">A EdumaisTec é uma instituição de vanguarda focada no reconhecimento de competências.</p>
           </div>
-          
-          <div className="max-w-3xl mx-auto mb-12">
-             <p className="text-white/40 text-[10px] md:text-xs leading-relaxed uppercase tracking-[0.15em] font-bold">
-               A EdumaisTec é uma instituição de vanguarda focada no reconhecimento de competências profissionais. <br className="hidden md:block" /> 
-               Todos os diplomas emitidos por nossas parceiras são registrados no SISTEC/MEC e possuem validade nacional plena.
-             </p>
-          </div>
-
-          <div className="w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent mb-12" />
-
-          <div className="flex flex-col md:flex-row items-center justify-center gap-6 text-[10px] text-white/20 font-black uppercase tracking-[0.4em]">
-            <span>© {new Date().getFullYear()} EDUMAISTEC</span>
-            <span className="hidden md:block opacity-30">|</span>
-            <span>Todos os direitos reservados</span>
-          </div>
+          <p className="text-white/20 text-[10px] uppercase tracking-widest">© {new Date().getFullYear()} EDUMAISTEC | CNPJ: 63.111.623/0001-51</p>
         </div>
       </footer>
 
-      {/* Persistent Sticky WhatsApp Button */}
-      <div className="fixed bottom-6 right-6 md:bottom-10 md:right-10 z-[100]">
-         <button 
-           onClick={openModal}
-           className="bg-[#25D366] text-white p-4 md:p-5 rounded-full shadow-3xl hover:scale-110 active:scale-95 transition-all group animate-bounce-slow flex items-center justify-center"
-         >
-            <MessageCircle size={36} className="fill-white" />
-            <div className="absolute -top-1 -right-1 w-6 h-6 md:w-7 md:h-7 bg-red-600 rounded-full border-2 border-white flex items-center justify-center text-[10px] font-black animate-pulse">1</div>
-         </button>
+      {/* WhatsApp Floating */}
+      <div className="fixed bottom-6 right-6 z-[100]">
+        <button onClick={openModal} className="bg-[#25D366] text-white p-5 rounded-full shadow-3xl hover:scale-110 transition-all group animate-bounce-slow">
+          <MessageCircle size={32} className="fill-white" />
+        </button>
       </div>
 
       <style>{`
-        @keyframes fade-in {
-          from { opacity: 0; transform: scale(0.95); }
-          to { opacity: 1; transform: scale(1); }
-        }
+        @keyframes fade-in { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
         .animate-fade-in { animation: fade-in 0.3s ease-out forwards; }
         .shadow-3xl { box-shadow: 0 45px 90px -20px rgba(0, 51, 102, 0.45); }
-        .animate-shine { animation: shine 1.8s infinite; }
-        @keyframes shine {
-          0% { left: -100%; }
-          100% { left: 125%; }
-        }
-        @keyframes bounce-slow {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-12px); }
-        }
+        @keyframes bounce-slow { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
         .animate-bounce-slow { animation: bounce-slow 5s ease-in-out infinite; }
       `}</style>
     </div>
