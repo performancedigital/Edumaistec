@@ -127,6 +127,7 @@ const Reveal = ({ children, className = "", delay = 0 }: RevealProps) => {
 export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [scrollWidth, setScrollWidth] = useState(0);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const openModal = () => setIsModalOpen(true);
 
@@ -134,6 +135,7 @@ export default function App() {
     const handleScroll = () => {
       const scrollTotal = document.documentElement.scrollHeight - document.documentElement.clientHeight;
       setScrollWidth((window.scrollY / scrollTotal) * 100);
+      setIsScrolled(window.scrollY > 20);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -146,16 +148,16 @@ export default function App() {
       
       <LeadModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
-      {/* Header */}
-      <header className="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-lg border-b border-gray-100 py-4 shadow-sm">
+      {/* Header - UX Otimizado */}
+      <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white/90 py-2 shadow-md backdrop-blur-md' : 'bg-white py-4 shadow-sm'}`}>
         <div className="container mx-auto px-4 flex justify-between items-center">
           <div className="flex items-center space-x-2 group cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-            <div className="w-10 h-10 bg-navy flex items-center justify-center rounded-xl rotate-3 group-hover:rotate-12 transition-all duration-500 shadow-lg shadow-navy/20">
-               <Award className="text-brandOrange w-6 h-6" />
+            <div className={`bg-navy flex items-center justify-center rounded-xl rotate-3 group-hover:rotate-12 transition-all duration-500 shadow-lg shadow-navy/20 ${isScrolled ? 'w-8 h-8' : 'w-10 h-10'}`}>
+               <Award className={`text-brandOrange ${isScrolled ? 'w-5 h-5' : 'w-6 h-6'}`} />
             </div>
-            <div className="text-navy font-black text-xl tracking-tighter leading-none">
+            <div className={`text-navy font-black tracking-tighter leading-none transition-all ${isScrolled ? 'text-lg' : 'text-xl'}`}>
               EDU<span className="text-brandOrange">MAIS</span>TEC<br/>
-              <span className="text-[8px] font-bold text-gray-400 tracking-[0.2em] uppercase">Certificação Técnica</span>
+              <span className="text-[7px] font-bold text-gray-400 tracking-[0.2em] uppercase">Certificação Técnica</span>
             </div>
           </div>
           <nav className="hidden lg:flex items-center space-x-10 text-navy font-bold text-sm tracking-tight">
@@ -168,29 +170,31 @@ export default function App() {
           </nav>
           <button 
             onClick={openModal}
-            className="bg-navy text-white px-8 py-3.5 rounded-full font-bold hover:bg-brandBlueLight hover:shadow-xl hover:shadow-navy/10 transition-all flex items-center text-sm active:scale-95"
+            className={`bg-navy text-white rounded-full font-bold hover:bg-brandBlueLight hover:shadow-xl hover:shadow-navy/10 transition-all flex items-center text-sm active:scale-95 ${isScrolled ? 'px-6 py-2' : 'px-8 py-3.5'}`}
           >
-            <MessageCircle size={18} className="mr-2" />
+            <MessageCircle size={isScrolled ? 16 : 18} className="mr-2" />
             Análise Grátis
           </button>
         </div>
       </header>
 
       <main className="flex-grow">
-        {/* Hero Section - Ajuste de espaçamento superior conforme solicitado */}
-        <section id="início" className="relative bg-navy pt-20 pb-16 md:pt-28 md:pb-32 overflow-hidden">
+        {/* Hero Section */}
+        <section id="início" className="relative bg-navy pt-24 pb-16 md:pt-36 md:pb-40 overflow-hidden">
           <div className="absolute inset-0 pointer-events-none">
             <div className="absolute top-1/4 -right-20 w-[600px] h-[600px] bg-brandOrange/20 rounded-full blur-[150px] animate-pulse"></div>
             <div className="absolute -bottom-24 -left-24 w-[500px] h-[500px] bg-brandBlueLight/30 rounded-full blur-[100px]"></div>
           </div>
           
           <div className="container mx-auto px-4 relative z-10">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
+            {/* Gap reduzido de 24 para 16 para aproximar o texto do quadro */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
               <Reveal>
                 <div className="inline-flex items-center bg-white/5 border border-white/10 text-brandOrange px-6 py-2 rounded-full font-bold text-xs mb-8 tracking-[0.2em] uppercase backdrop-blur-md">
                   <Zap size={16} className="mr-2 fill-brandOrange" /> Transforme experiência em reconhecimento
                 </div>
-                <h1 className="text-4xl sm:text-5xl md:text-8xl font-title text-white mb-6 md:mb-8 leading-[1.1] tracking-tighter">
+                {/* Fonte md:text-8xl reduzida para md:text-7xl para melhor encaixe lateral */}
+                <h1 className="text-4xl sm:text-5xl md:text-7xl font-title text-white mb-6 md:mb-8 leading-[1.1] tracking-tighter">
                   Sua experiência de 1 ano vale um <span className="text-brandOrange italic underline decoration-white/20">Diploma Técnico</span>
                 </h1>
                 <p className="text-white/80 text-lg md:text-2xl mb-10 md:mb-12 max-w-xl font-medium leading-relaxed">
@@ -208,43 +212,44 @@ export default function App() {
                 </div>
 
                 <div className="mt-10 flex flex-wrap gap-6 md:gap-10 opacity-60">
-                  <div className="flex items-center text-white text-[10px] font-black uppercase tracking-widest"><CheckCircle size={18} className="mr-3 text-brandOrange" /> Reconhecido MEC</div>
-                  <div className="flex items-center text-white text-[10px] font-black uppercase tracking-widest"><CheckCircle size={18} className="mr-3 text-brandOrange" /> Válido p/ Concursos</div>
-                  <div className="flex items-center text-white text-[10px] font-black uppercase tracking-widest"><CheckCircle size={18} className="mr-3 text-brandOrange" /> Registro no SISTEC</div>
+                  <div className="flex items-center text-white text-[10px] font-black uppercase tracking-widest leading-none"><CheckCircle size={18} className="mr-3 text-brandOrange" /> Reconhecido MEC</div>
+                  <div className="flex items-center text-white text-[10px] font-black uppercase tracking-widest leading-none"><CheckCircle size={18} className="mr-3 text-brandOrange" /> Válido p/ Concursos</div>
+                  <div className="flex items-center text-white text-[10px] font-black uppercase tracking-widest leading-none"><CheckCircle size={18} className="mr-3 text-brandOrange" /> Registro no SISTEC</div>
                 </div>
               </Reveal>
 
-              <div className="relative mt-8 lg:mt-0">
+              {/* Quadro Direito */}
+              <div className="relative mt-12 lg:mt-0">
                 <Reveal delay={200} className="relative z-10">
-                  <div className="bg-white/10 backdrop-blur-xl p-8 md:p-10 rounded-[2.5rem] md:rounded-[3.5rem] border border-white/20 shadow-3xl">
-                    <div className="grid grid-cols-2 gap-6 md:gap-10">
-                      <div className="text-center">
-                        <p className="text-2xl sm:text-3xl md:text-4xl font-black text-brandOrange mb-2 tracking-tighter">100%</p>
-                        <p className="text-white/60 text-[9px] md:text-[10px] font-bold uppercase tracking-widest leading-tight">Legalidade (LDB)</p>
+                  <div className="bg-white/10 backdrop-blur-xl p-10 md:p-14 lg:p-12 xl:p-16 rounded-[3rem] md:rounded-[4rem] border border-white/20 shadow-3xl">
+                    <div className="grid grid-cols-2 gap-8 md:gap-10 lg:gap-12">
+                      <div className="text-center flex flex-col justify-center">
+                        <p className="text-2xl sm:text-3xl md:text-5xl font-black text-brandOrange mb-3 tracking-tighter">100%</p>
+                        <p className="text-white/60 text-[9px] md:text-[11px] font-bold uppercase tracking-widest leading-tight">Legalidade (LDB)</p>
                       </div>
-                      <div className="text-center">
-                        <p className="text-2xl sm:text-3xl md:text-4xl font-black text-brandOrange mb-2 tracking-tighter">48h</p>
-                        <p className="text-white/60 text-[9px] md:text-[10px] font-bold uppercase tracking-widest leading-tight">diploma em mãos</p>
+                      <div className="text-center flex flex-col justify-center">
+                        <p className="text-2xl sm:text-3xl md:text-5xl font-black text-brandOrange mb-3 tracking-tighter">48h</p>
+                        <p className="text-white/60 text-[9px] md:text-[11px] font-bold uppercase tracking-widest leading-tight">diploma em mãos</p>
                       </div>
-                      <div className="text-center">
-                        <p className="text-2xl sm:text-3xl md:text-4xl font-black text-brandOrange mb-2 tracking-tighter uppercase leading-none">Conselho</p>
-                        <p className="text-white/60 text-[9px] md:text-[10px] font-bold uppercase tracking-widest leading-tight">Registro Profissional</p>
+                      <div className="text-center flex flex-col justify-center">
+                        <p className="text-2xl sm:text-3xl md:text-5xl font-black text-brandOrange mb-3 tracking-tighter uppercase leading-none">Conselho</p>
+                        <p className="text-white/60 text-[9px] md:text-[11px] font-bold uppercase tracking-widest leading-tight">Registro Profissional</p>
                       </div>
-                      <div className="text-center">
-                        <p className="text-2xl sm:text-3xl md:text-4xl font-black text-brandOrange mb-2 tracking-tighter leading-none">SISTEC/MEC</p>
-                        <p className="text-white/60 text-[9px] md:text-[10px] font-bold uppercase tracking-widest leading-tight">Validade Nacional</p>
+                      <div className="text-center flex flex-col justify-center">
+                        <p className="text-2xl sm:text-3xl md:text-5xl font-black text-brandOrange mb-3 tracking-tighter leading-none">SISTEC/MEC</p>
+                        <p className="text-white/60 text-[9px] md:text-[11px] font-bold uppercase tracking-widest leading-tight">Validade Nacional</p>
                       </div>
                     </div>
                   </div>
                 </Reveal>
-                <div className="absolute -z-10 -top-8 -right-8 w-48 h-48 bg-brandOrange/30 rounded-full blur-[80px]"></div>
+                <div className="absolute -z-10 -top-12 -right-12 w-64 h-64 bg-brandOrange/30 rounded-full blur-[100px]"></div>
               </div>
             </div>
           </div>
         </section>
 
         {/* Especialidades Reordenadas */}
-        <section id="cursos" className="py-16 md:py-24 bg-white relative">
+        <section id="cursos" className="py-20 md:py-32 bg-white relative">
           <div className="container mx-auto px-4">
             <Reveal className="text-center mb-16 md:mb-24">
               <span className="text-[10px] font-black text-brandOrange bg-brandOrange/5 px-6 py-2 rounded-full uppercase tracking-[0.3em] mb-6 inline-block">As formações que o mercado exige</span>
@@ -362,7 +367,7 @@ export default function App() {
            </div>
         </section>
 
-        {/* FAQ - Ajuste de textos solicitado */}
+        {/* FAQ */}
         <section id="faq" className="py-16 md:py-32 bg-white">
            <div className="container mx-auto px-4 max-w-5xl">
               <Reveal className="text-center mb-16 md:mb-20">
@@ -409,7 +414,7 @@ export default function App() {
            </div>
         </section>
 
-        {/* Localização & Contato - Ajuste de texto solicitado */}
+        {/* Contato */}
         <section id="contato" className="py-16 md:py-24 bg-brandLight">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
