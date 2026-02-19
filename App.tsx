@@ -51,15 +51,14 @@ const LeadModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Disparar evento de Lead para o Meta Pixel
+    // Disparar evento de Lead para o Meta Pixel (Garante o rastreio da conversão)
     if ((window as any).fbq) {
       (window as any).fbq('track', 'Lead');
     }
 
-    // Construção da URL de redirecionamento atualizada conforme solicitado
+    // URL de redirecionamento conforme solicitado: hubrhino + utm_campaign=vendas
     const redirectUrl = `https://hubrhino.rhinocrm.com.br/redirect-form?campaign=meta-lp-12x89-90&utm_source=meta&utm_campaign=vendas&nome=${encodeURIComponent(formData.name)}&whatsapp=${encodeURIComponent(formData.whatsapp)}`;
     
-    // Redirecionamento
     window.open(redirectUrl, '_blank');
     onClose();
   };
@@ -514,7 +513,7 @@ export default function App() {
           
           <div className="max-w-3xl mx-auto mb-12">
              <p className="text-white/40 text-[10px] md:text-xs leading-relaxed uppercase tracking-[0.15em] font-bold">
-               A EdumaisTec é uma institution de vanguarda focada no reconhecimento de competências profissionais. <br className="hidden md:block" /> 
+               A EdumaisTec é uma instituição de vanguarda focada no reconhecimento de competências profissionais. <br className="hidden md:block" /> 
                Todos os diplomas emitidos por nossas parceiras são registrados no SISTEC/MEC e possuem validade nacional plena.
              </p>
           </div>
