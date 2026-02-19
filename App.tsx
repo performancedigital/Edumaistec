@@ -141,6 +141,9 @@ export default function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // --- ALERE ESTA LINHA COM A SUA URL DO GITHUB ---
+  const logoUrl = "https://raw.githubusercontent.com/performancedigital/Edumaistec/main/logo.png"; 
+
   return (
     <div className="min-h-screen flex flex-col font-body selection:bg-brandOrange selection:text-white bg-white overflow-x-hidden">
       {/* Scroll Progress Bar */}
@@ -148,17 +151,25 @@ export default function App() {
       
       <LeadModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
-      {/* Header - UX Otimizado */}
-      <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white/90 py-2 shadow-md backdrop-blur-md' : 'bg-white py-4 shadow-sm'}`}>
+      {/* Header */}
+      <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white/90 py-1 shadow-md backdrop-blur-md' : 'bg-white py-3 shadow-sm'}`}>
         <div className="container mx-auto px-4 flex justify-between items-center">
-          <div className="flex items-center space-x-2 group cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-            <div className={`bg-navy flex items-center justify-center rounded-xl rotate-3 group-hover:rotate-12 transition-all duration-500 shadow-lg shadow-navy/20 ${isScrolled ? 'w-8 h-8' : 'w-10 h-10'}`}>
-               <Award className={`text-brandOrange ${isScrolled ? 'w-5 h-5' : 'w-6 h-6'}`} />
-            </div>
-            <div className={`text-navy font-black tracking-tighter leading-none transition-all ${isScrolled ? 'text-lg' : 'text-xl'}`}>
-              EDU<span className="text-brandOrange">MAIS</span>TEC<br/>
-              <span className="text-[7px] font-bold text-gray-400 tracking-[0.2em] uppercase">Certificação Técnica</span>
-            </div>
+          <div className="flex items-center group cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+            <img 
+              src={logoUrl} 
+              alt="EdumaisTec Logo" 
+              className={`transition-all duration-500 group-hover:scale-105 group-hover:rotate-1 object-contain ${isScrolled ? 'h-10 md:h-12' : 'h-14 md:h-16'}`}
+              onError={(e) => {
+                (e.target as HTMLImageElement).style.display = 'none';
+                const parent = (e.target as HTMLElement).parentElement;
+                if (parent && !parent.querySelector('.fallback-text')) {
+                  const span = document.createElement('span');
+                  span.className = 'fallback-text text-navy font-black text-xl tracking-tighter uppercase';
+                  span.innerHTML = 'EDU<span class="text-brandOrange">MAIS</span>TEC';
+                  parent.appendChild(span);
+                }
+              }}
+            />
           </div>
           <nav className="hidden lg:flex items-center space-x-10 text-navy font-bold text-sm tracking-tight">
             {['Início', 'Cursos', 'Certificação', 'FAQ', 'Contato'].map((item) => (
@@ -180,21 +191,19 @@ export default function App() {
 
       <main className="flex-grow">
         {/* Hero Section */}
-        <section id="início" className="relative bg-navy pt-24 pb-16 md:pt-36 md:pb-40 overflow-hidden">
+        <section id="início" className="relative bg-navy pt-28 pb-16 md:pt-40 md:pb-40 overflow-hidden">
           <div className="absolute inset-0 pointer-events-none">
             <div className="absolute top-1/4 -right-20 w-[600px] h-[600px] bg-brandOrange/20 rounded-full blur-[150px] animate-pulse"></div>
             <div className="absolute -bottom-24 -left-24 w-[500px] h-[500px] bg-brandBlueLight/30 rounded-full blur-[100px]"></div>
           </div>
           
           <div className="container mx-auto px-4 relative z-10">
-            {/* Gap reduzido de 24 para 16 para aproximar o texto do quadro */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
               <Reveal>
                 <div className="inline-flex items-center bg-white/5 border border-white/10 text-brandOrange px-6 py-2 rounded-full font-bold text-xs mb-8 tracking-[0.2em] uppercase backdrop-blur-md">
                   <Zap size={16} className="mr-2 fill-brandOrange" /> Transforme experiência em reconhecimento
                 </div>
-                {/* Fonte md:text-8xl reduzida para md:text-7xl para melhor encaixe lateral */}
-                <h1 className="text-4xl sm:text-5xl md:text-7xl font-title text-white mb-6 md:mb-8 leading-[1.1] tracking-tighter">
+                <h1 className="text-4xl sm:text-5xl md:text-[4.2rem] lg:text-[4.8rem] xl:text-[5.5rem] font-title text-white mb-6 md:mb-8 leading-[1.05] tracking-tighter">
                   Sua experiência de 1 ano vale um <span className="text-brandOrange italic underline decoration-white/20">Diploma Técnico</span>
                 </h1>
                 <p className="text-white/80 text-lg md:text-2xl mb-10 md:mb-12 max-w-xl font-medium leading-relaxed">
@@ -248,7 +257,7 @@ export default function App() {
           </div>
         </section>
 
-        {/* Especialidades Reordenadas */}
+        {/* Especialidades */}
         <section id="cursos" className="py-20 md:py-32 bg-white relative">
           <div className="container mx-auto px-4">
             <Reveal className="text-center mb-16 md:mb-24">
@@ -300,73 +309,6 @@ export default function App() {
           </div>
         </section>
 
-        {/* Autoridade & Legalidade */}
-        <section id="certificacao" className="py-20 md:py-32 bg-navy relative overflow-hidden">
-           <div className="absolute inset-0 opacity-10 pointer-events-none">
-             <Building2 className="absolute -left-20 -bottom-20 w-96 h-96 transform -rotate-12" />
-           </div>
-           <div className="container mx-auto px-4 relative z-10">
-             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-               <Reveal>
-                 <span className="text-brandOrange font-black text-xs uppercase tracking-[0.4em] mb-8 inline-block">Certificação Federal</span>
-                 <h2 className="text-4xl md:text-7xl text-white font-title mb-10 leading-[0.9] tracking-tighter uppercase">Diploma <span className="text-brandOrange">Válido & Seguro</span> Conforme a LDB</h2>
-                 <p className="text-white/60 text-xl leading-relaxed mb-12 font-medium">
-                   O <span className="text-white font-bold underline decoration-brandOrange underline-offset-4">Artigo 41 da Lei 9.394/96</span> garante que sua prática vale como educação. Não gaste 2 anos estudando o que você já sabe.
-                 </p>
-                 <div className="space-y-6 mb-12">
-                   {[
-                     "Aceito em Concursos Públicos e Processos Seletivos",
-                     "Registro profissional em COREN, CFT, CRECI, etc",
-                     "Autenticidade garantida pelo SISTEC do MEC",
-                     "Válido em todo o território nacional"
-                   ].map((t, i) => (
-                     <div key={i} className="flex items-center text-white/90 font-bold text-lg">
-                       <div className="bg-brandOrange/20 p-2 rounded-lg mr-5">
-                          <Check size={20} className="text-brandOrange" />
-                       </div>
-                       {t}
-                     </div>
-                   ))}
-                 </div>
-                 <button onClick={openModal} className="bg-brandOrange text-white px-12 py-6 rounded-2xl font-black text-lg hover:brightness-110 shadow-3xl shadow-brandOrange/20 transition-all uppercase flex items-center group">
-                    VALIDAR MINHA CARREIRA AGORA <ArrowRight size={20} className="ml-3 group-hover:translate-x-2 transition-transform" />
-                 </button>
-               </Reveal>
-               <div className="relative">
-                 <Reveal delay={200}>
-                   <div className="bg-white/5 backdrop-blur-2xl p-10 md:p-14 rounded-[3rem] md:rounded-[4rem] border border-white/10 shadow-3xl">
-                     <div className="flex flex-col space-y-10">
-                       <div className="flex items-start group">
-                         <div className="bg-brandOrange/20 p-5 rounded-2xl mr-8 group-hover:bg-brandOrange transition-colors">
-                           <Zap className="text-brandOrange group-hover:text-white" size={32} />
-                         </div>
-                         <div>
-                           <h4 className="text-white font-black text-2xl mb-3 tracking-tight">Análise Imediata</h4>
-                           <p className="text-white/40 text-base font-medium">Nossa equipe avalia sua documentação e responde em até 24h úteis sobre sua eligibilidade.</p>
-                         </div>
-                       </div>
-                       <div className="flex items-start group">
-                         <div className="bg-brandOrange/20 p-5 rounded-2xl mr-8 group-hover:bg-brandOrange transition-colors">
-                           <ShieldCheck className="text-brandOrange group-hover:text-white" size={32} />
-                         </div>
-                         <div>
-                           <h4 className="text-white font-black text-2xl mb-3 tracking-tight">Garantia SISTEC</h4>
-                           <p className="text-white/40 text-base font-medium">Após aprovação, seu registro é inserido no portal oficial do MEC para consulta pública imediata.</p>
-                         </div>
-                       </div>
-                       <div className="pt-6">
-                         <button onClick={openModal} className="w-full py-6 bg-white text-navy font-black rounded-3xl hover:bg-brandOrange hover:text-white transition-all uppercase tracking-widest text-sm">
-                            Falar com um Consultor
-                         </button>
-                       </div>
-                     </div>
-                   </div>
-                 </Reveal>
-               </div>
-             </div>
-           </div>
-        </section>
-
         {/* FAQ */}
         <section id="faq" className="py-16 md:py-32 bg-white">
            <div className="container mx-auto px-4 max-w-5xl">
@@ -394,32 +336,12 @@ export default function App() {
            </div>
         </section>
 
-        {/* CTA Final */}
-        <section className="py-20 md:py-32 bg-brandOrange relative overflow-hidden">
-           <div className="container mx-auto px-4 text-center relative z-10">
-              <Reveal>
-                 <h2 className="text-4xl md:text-8xl text-white font-black mb-12 leading-none tracking-tighter uppercase italic">
-                   VALIDE SUA EXPERIÊNCIA <br className="hidden md:block"/> E MUDE DE VIDA!
-                 </h2>
-                 <p className="text-white/80 text-xl md:text-3xl mb-16 font-medium max-w-4xl mx-auto">
-                   Não perca mais tempo. Regularize sua profissão hoje mesmo e conquiste o salário que você realmente merece.
-                 </p>
-                 <button 
-                  onClick={openModal}
-                  className="bg-navy text-white px-10 md:px-16 py-6 md:py-8 rounded-[2rem] md:rounded-[2.5rem] font-black text-xl md:text-2xl hover:bg-brandBlueLight hover:scale-105 active:scale-95 transition-all shadow-3xl shadow-navy/30 uppercase tracking-tight"
-                 >
-                    SOLICITAR ANÁLISE GRATUITA AGORA
-                 </button>
-              </Reveal>
-           </div>
-        </section>
-
         {/* Contato */}
         <section id="contato" className="py-16 md:py-24 bg-brandLight">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
                {[
-                 { icon: MessageCircle, title: "Central WhatsApp", val: "", color: "text-green-500" },
+                 { icon: MessageCircle, title: "Central WhatsApp", val: "Falar no Chat", color: "text-green-500" },
                  { icon: Mail, title: "E-mail Atendimento", val: "edumaistecoficial@gmail.com", color: "text-red-500" },
                  { icon: Instagram, title: "Nosso Instagram", val: "@edumaistec", color: "text-pink-500" },
                  { icon: MapPin, title: "Sede Administrativa", val: "Cel. Fabriciano - MG", color: "text-navy" }
@@ -437,17 +359,42 @@ export default function App() {
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="bg-navy text-white py-16">
+      {/* Footer Ajustado */}
+      <footer className="bg-navy text-white py-20 border-t border-white/5">
         <div className="container mx-auto px-4 text-center">
-          <div className="flex items-center justify-center space-x-2 mb-10">
-             <div className="w-10 h-10 bg-brandOrange rounded-xl flex items-center justify-center shadow-lg shadow-brandOrange/20">
-                <Award className="text-navy w-6 h-6" />
+          <div className="flex flex-col items-center justify-center mb-12">
+             <img 
+               src={logoUrl} 
+               alt="EdumaisTec Logo Rodapé" 
+               className="h-20 md:h-28 brightness-110 contrast-125 mb-8 object-contain"
+               onError={(e) => {
+                 (e.target as HTMLImageElement).style.display = 'none';
+                 const parent = (e.target as HTMLElement).parentElement;
+                 if (parent && !parent.querySelector('.footer-fallback')) {
+                    const div = document.createElement('div');
+                    div.className = 'footer-fallback text-white font-black text-3xl mb-4 tracking-tighter';
+                    div.innerHTML = 'EDU<span class="text-brandOrange">MAIS</span>TEC';
+                    parent.prepend(div);
+                 }
+               }}
+             />
+             <div className="bg-white/5 px-6 py-2 rounded-full border border-white/10">
+                <p className="text-[11px] text-white/60 font-bold uppercase tracking-[0.2em]">
+                  CNPJ: 63.111.623/0001-51
+                </p>
              </div>
-             <div className="font-black text-2xl tracking-tighter uppercase">EDU<span className="text-brandOrange">MAIS</span>TEC</div>
           </div>
-          <p className="text-[10px] text-white/20 font-black uppercase tracking-[0.6em]">
-            © {new Date().getFullYear()} EDUMAISTEC • Liderança em Certificação Técnica por Competência
+          
+          <div className="max-w-2xl mx-auto mb-10">
+             <p className="text-white/30 text-[10px] md:text-xs leading-relaxed uppercase tracking-widest font-medium">
+               A EdumaisTec é uma instituição dedicada à aceleração de carreiras através da certificação técnica por competência, em total conformidade com a Lei de Diretrizes e Bases da Educação Nacional (LDB).
+             </p>
+          </div>
+
+          <div className="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-10" />
+
+          <p className="text-[10px] text-white/20 font-black uppercase tracking-[0.5em]">
+            © {new Date().getFullYear()} EDUMAISTEC • Todos os direitos reservados
           </p>
         </div>
       </footer>
