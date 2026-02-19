@@ -52,13 +52,14 @@ const LeadModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }
     e.preventDefault();
     
     // Disparar evento de Lead para o Meta Pixel (Garante o rastreio da conversão)
-    if ((window as any).fbq) {
+    if (typeof (window as any).fbq === 'function') {
       (window as any).fbq('track', 'Lead');
     }
 
-    // URL de redirecionamento conforme solicitado: hubrhino + utm_campaign=vendas
+    // URL de redirecionamento atualizada conforme solicitado: hubrhino + utm_campaign=vendas
     const redirectUrl = `https://hubrhino.rhinocrm.com.br/redirect-form?campaign=meta-lp-12x89-90&utm_source=meta&utm_campaign=vendas&nome=${encodeURIComponent(formData.name)}&whatsapp=${encodeURIComponent(formData.whatsapp)}`;
     
+    // Abrir o link em nova aba
     window.open(redirectUrl, '_blank');
     onClose();
   };
