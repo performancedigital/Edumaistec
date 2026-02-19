@@ -44,7 +44,24 @@ interface RevealProps {
 
 // --- Lead Modal Component ---
 const LeadModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => {
+  const [formData, setFormData] = useState({ name: '', whatsapp: '' });
+
   if (!isOpen) return null;
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Construção da URL de redirecionamento conforme solicitado
+    const redirectUrl = `https://hub.rhinocrm.com.br/redirect-form?campaign=meta-lp-12x89-90&utm_source=meta&utm_campaign=meta-lp&nome=${encodeURIComponent(formData.name)}&whatsapp=${encodeURIComponent(formData.whatsapp)}`;
+    
+    // Redirecionamento
+    window.open(redirectUrl, '_blank');
+    onClose();
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
 
   return (
     <div className="fixed inset-0 z-[110] flex items-center justify-center p-4">
@@ -59,17 +76,33 @@ const LeadModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }
           </div>
           <h3 className="text-3xl font-black text-navy leading-none mb-3 uppercase tracking-tighter italic">Análise Gratuita</h3>
           <p className="text-gray-500 font-medium text-sm leading-relaxed">
-            Nossa equipe jurídica e técnica vai validar sua experiência agora mesmo. Insira seus dados para receber o diagnóstico no seu <span className="text-green-600 font-bold">WhatsApp</span>.
+            Nossa equipe jurídica e técnica vai validar sua experiência agora mesmo. Insira seus dados para receber o diagnóstico.
           </p>
         </div>
-        <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); onClose(); window.open('https://wa.me/5531973276886', '_blank'); }}>
+        <form className="space-y-4" onSubmit={handleSubmit}>
           <div className="group">
             <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 ml-1 group-focus-within:text-brandOrange transition-colors">Seu Nome Completo</label>
-            <input required type="text" placeholder="Ex: João da Silva" className="w-full bg-brandLight border-2 border-transparent focus:border-brandOrange px-6 py-4 rounded-2xl font-bold outline-none transition-all placeholder:text-gray-300" />
+            <input 
+              required 
+              type="text" 
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Ex: João da Silva" 
+              className="w-full bg-brandLight border-2 border-transparent focus:border-brandOrange px-6 py-4 rounded-2xl font-bold outline-none transition-all placeholder:text-gray-300" 
+            />
           </div>
           <div className="group">
             <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 ml-1 group-focus-within:text-brandOrange transition-colors">WhatsApp com DDD</label>
-            <input required type="tel" placeholder="(00) 00000-0000" className="w-full bg-brandLight border-2 border-transparent focus:border-brandOrange px-6 py-4 rounded-2xl font-bold outline-none transition-all placeholder:text-gray-300" />
+            <input 
+              required 
+              type="tel" 
+              name="whatsapp"
+              value={formData.whatsapp}
+              onChange={handleChange}
+              placeholder="(00) 00000-0000" 
+              className="w-full bg-brandLight border-2 border-transparent focus:border-brandOrange px-6 py-4 rounded-2xl font-bold outline-none transition-all placeholder:text-gray-300" 
+            />
           </div>
           <button type="submit" className="w-full bg-brandOrange text-white py-6 rounded-2xl font-black text-xl hover:brightness-110 transition-all shadow-xl shadow-brandOrange/20 active:scale-95 flex items-center justify-center group uppercase tracking-tight">
             INICIAR CERTIFICAÇÃO <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
@@ -141,7 +174,6 @@ export default function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // URL DA LOGO NO GITHUB - MANTIDA CONFORME SOLICITADO
   const logoUrl = "https://raw.githubusercontent.com/performancedigital/Edumaistec/main/logo.png"; 
 
   return (
@@ -160,7 +192,6 @@ export default function App() {
               alt="EdumaisTec Logo" 
               className={`transition-all duration-500 group-hover:scale-105 group-hover:rotate-1 object-contain ${isScrolled ? 'h-10 md:h-12' : 'h-14 md:h-16'}`}
               onError={(e) => {
-                // Previne loop infinito e mostra texto se a imagem falhar
                 const target = e.target as HTMLImageElement;
                 target.style.display = 'none';
                 const parent = target.parentElement;
@@ -299,7 +330,130 @@ export default function App() {
                 </Reveal>
               ))}
             </div>
+            
+            <Reveal className="text-center">
+              <button 
+                onClick={openModal}
+                className="bg-brandOrange text-white px-10 md:px-16 py-6 md:py-7 rounded-[2rem] font-black text-lg md:text-xl hover:scale-105 active:scale-95 transition-all shadow-3xl shadow-brandOrange/30 uppercase tracking-tighter flex items-center mx-auto"
+              >
+                VER LISTA COMPLETA DE CURSOS <ChevronDown className="ml-3" />
+              </button>
+            </Reveal>
           </div>
+        </section>
+
+        {/* Autoridade & Legalidade */}
+        <section id="certificacao" className="py-20 md:py-32 bg-navy relative overflow-hidden">
+           <div className="absolute inset-0 opacity-10 pointer-events-none">
+             <Building2 className="absolute -left-20 -bottom-20 w-96 h-96 transform -rotate-12" />
+           </div>
+           <div className="container mx-auto px-4 relative z-10">
+             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+               <Reveal>
+                 <span className="text-brandOrange font-black text-xs uppercase tracking-[0.4em] mb-8 inline-block">Certificação Federal</span>
+                 <h2 className="text-4xl md:text-7xl text-white font-title mb-10 leading-[0.9] tracking-tighter uppercase">Diploma <span className="text-brandOrange">Válido & Seguro</span> Conforme a LDB</h2>
+                 <p className="text-white/60 text-xl leading-relaxed mb-12 font-medium">
+                   O <span className="text-white font-bold underline decoration-brandOrange underline-offset-4">Artigo 41 da Lei 9.394/96</span> garante que sua prática vale como educação. Não gaste 2 anos estudando o que você já sabe.
+                 </p>
+                 <div className="space-y-6 mb-12">
+                   {[
+                     "Aceito em Concursos Públicos e Processos Seletivos",
+                     "Registro profissional em COREN, CFT, CRECI, etc",
+                     "Autenticidade garantida pelo SISTEC do MEC",
+                     "Válido em todo o território nacional"
+                   ].map((t, i) => (
+                     <div key={i} className="flex items-center text-white/90 font-bold text-lg">
+                       <div className="bg-brandOrange/20 p-2 rounded-lg mr-5">
+                          <Check size={20} className="text-brandOrange" />
+                       </div>
+                       {t}
+                     </div>
+                   ))}
+                 </div>
+                 <button onClick={openModal} className="bg-brandOrange text-white px-12 py-6 rounded-2xl font-black text-lg hover:brightness-110 shadow-3xl shadow-brandOrange/20 transition-all uppercase flex items-center group">
+                    VALIDAR MINHA CARREIRA AGORA <ArrowRight size={20} className="ml-3 group-hover:translate-x-2 transition-transform" />
+                 </button>
+               </Reveal>
+               <div className="relative">
+                 <Reveal delay={200}>
+                   <div className="bg-white/5 backdrop-blur-2xl p-10 md:p-14 rounded-[3rem] md:rounded-[4rem] border border-white/10 shadow-3xl">
+                     <div className="flex flex-col space-y-10">
+                       <div className="flex items-start group">
+                         <div className="bg-brandOrange/20 p-5 rounded-2xl mr-8 group-hover:bg-brandOrange transition-colors">
+                           <Zap className="text-brandOrange group-hover:text-white" size={32} />
+                         </div>
+                         <div>
+                           <h4 className="text-white font-black text-2xl mb-3 tracking-tight">Análise Imediata</h4>
+                           <p className="text-white/40 text-base font-medium">Nossa equipe avalia sua documentação e responde em até 24h úteis sobre sua eligibilidade.</p>
+                         </div>
+                       </div>
+                       <div className="flex items-start group">
+                         <div className="bg-brandOrange/20 p-5 rounded-2xl mr-8 group-hover:bg-brandOrange transition-colors">
+                           <ShieldCheck className="text-brandOrange group-hover:text-white" size={32} />
+                         </div>
+                         <div>
+                           <h4 className="text-white font-black text-2xl mb-3 tracking-tight">Garantia SISTEC</h4>
+                           <p className="text-white/40 text-base font-medium">Após aprovação, seu registro é inserido no portal oficial do MEC para consulta pública imediata.</p>
+                         </div>
+                       </div>
+                       <div className="pt-6">
+                         <button onClick={openModal} className="w-full py-6 bg-white text-navy font-black rounded-3xl hover:bg-brandOrange hover:text-white transition-all uppercase tracking-widest text-sm">
+                            Falar com um Consultor
+                         </button>
+                       </div>
+                     </div>
+                   </div>
+                 </Reveal>
+               </div>
+             </div>
+           </div>
+        </section>
+
+        {/* FAQ */}
+        <section id="faq" className="py-16 md:py-32 bg-white">
+           <div className="container mx-auto px-4 max-w-5xl">
+              <Reveal className="text-center mb-16 md:mb-20">
+                 <h2 className="text-4xl md:text-7xl text-navy font-title tracking-tighter uppercase mb-6 leading-none">Principais <span className="text-brandOrange">Dúvidas</span></h2>
+                 <p className="text-gray-500 font-medium text-lg md:text-xl">Esclareça suas incertezas e dê o próximo passo na sua carreira.</p>
+              </Reveal>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                 {[
+                   { q: "O diploma é igual ao de quem fez o curso?", a: "Sim. O documento é emitido por escola técnica credenciada e não informa se foi por competência ou regular. Validade jurídica absoluta." },
+                   { q: "Posso me registrar nos conselhos?", a: "Sim! O diploma é oficial e registrado no MEC, o que garante o direito ao registro profissional nos conselhos de classe." },
+                   { q: "Qual o tempo médio do processo?", a: "A partir do envio da documentação e da realização da prova, são 48 horas úteis para emissão do diploma." },
+                   { q: "Preciso comprovar quanto tempo?", a: "É necessário comprovar no mínimo 1 ano de experiência profissional na área técnica desejada." }
+                 ].map((f, i) => (
+                   <Reveal key={i} delay={i * 100}>
+                      <div onClick={openModal} className="group border-2 border-gray-100 rounded-[2rem] md:rounded-[2.5rem] p-8 md:p-10 hover:border-brandOrange hover:bg-brandLight transition-all cursor-pointer h-full">
+                         <h4 className="text-navy font-black text-xl mb-6 flex items-start">
+                            <HelpCircle className="text-brandOrange mr-4 shrink-0 mt-1" size={24} /> {f.q}
+                         </h4>
+                         <p className="text-gray-600 font-medium leading-relaxed text-base">{f.a}</p>
+                      </div>
+                   </Reveal>
+                 ))}
+              </div>
+           </div>
+        </section>
+
+        {/* CTA Final */}
+        <section className="py-20 md:py-32 bg-brandOrange relative overflow-hidden">
+           <div className="container mx-auto px-4 text-center relative z-10">
+              <Reveal>
+                 <h2 className="text-4xl md:text-8xl text-white font-black mb-12 leading-none tracking-tighter uppercase italic">
+                   VALIDE SUA EXPERIÊNCIA <br className="hidden md:block"/> E MUDE DE VIDA!
+                 </h2>
+                 <p className="text-white/80 text-xl md:text-3xl mb-16 font-medium max-w-4xl mx-auto">
+                   Não perca mais tempo. Regularize sua profissão hoje mesmo e conquiste o salário que você realmente merece.
+                 </p>
+                 <button 
+                  onClick={openModal}
+                  className="bg-navy text-white px-10 md:px-16 py-6 md:py-8 rounded-[2rem] md:rounded-[2.5rem] font-black text-xl md:text-2xl hover:bg-brandBlueLight hover:scale-105 active:scale-95 transition-all shadow-3xl shadow-navy/30 uppercase tracking-tight"
+                 >
+                    SOLICITAR ANÁLISE GRATUITA AGORA
+                 </button>
+              </Reveal>
+           </div>
         </section>
 
         {/* Contato */}
@@ -325,7 +479,7 @@ export default function App() {
         </section>
       </main>
 
-      {/* Footer - Ajustado com CNPJ e Logo Oficial */}
+      {/* Footer */}
       <footer className="bg-navy text-white py-20 border-t border-white/5 relative overflow-hidden">
         <div className="container mx-auto px-4 text-center relative z-10">
           <div className="flex flex-col items-center justify-center mb-12">
