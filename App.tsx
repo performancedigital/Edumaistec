@@ -1,36 +1,22 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { 
   CheckCircle, 
-  Users, 
   ShieldCheck, 
   MessageCircle, 
-  ChevronDown, 
-  Star,
-  Award,
   Check,
   ArrowRight,
   Zap,
   Lock,
-  Search,
-  Instagram,
-  Mail,
-  MapPin,
-  Phone,
   GraduationCap,
-  HardHat,
-  Stethoscope,
-  Briefcase,
-  Monitor,
-  ArrowUpRight,
   HelpCircle,
-  Plus,
-  Minus,
-  Send,
   X,
   Building2,
   Thermometer,
   Wrench,
-  Activity
+  Activity,
+  // Added Stethoscope to the imports to fix "Cannot find name 'Stethoscope'" error.
+  Stethoscope
 } from 'lucide-react';
 
 // --- Types ---
@@ -38,7 +24,7 @@ interface RevealProps {
   children?: React.ReactNode;
   className?: string;
   delay?: number;
-  // Added key to RevealProps to fix TS error when used in map()
+  // A propriedade key é necessária para o TS quando usado em loops
   key?: React.Key;
 }
 
@@ -56,10 +42,10 @@ const LeadModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }
       (window as any).fbq('track', 'Lead');
     }
 
-    // URL de redirecionamento solicitada: hubrhino + utm_campaign=vendas
+    // URL de redirecionamento solicitada com parâmetros de track
     const redirectUrl = `https://hubrhino.rhinocrm.com.br/redirect-form?campaign=meta-lp-12x89-90&utm_source=meta&utm_campaign=vendas&nome=${encodeURIComponent(formData.name)}&whatsapp=${encodeURIComponent(formData.whatsapp)}`;
     
-    // Tentativa de abrir em nova aba, mas o track do lead já foi disparado
+    // Abrir o CRM em nova aba e fechar o modal
     window.open(redirectUrl, '_blank');
     onClose();
   };
@@ -184,7 +170,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex flex-col font-body selection:bg-brandOrange selection:text-white bg-white overflow-x-hidden">
-      {/* Scroll Progress Bar */}
+      {/* Barra de progresso do scroll */}
       <div className="fixed top-0 left-0 h-1 bg-brandOrange z-[120] transition-all duration-150" style={{ width: `${scrollWidth}%` }} />
       
       <LeadModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
@@ -310,7 +296,7 @@ export default function App() {
                 { icon: Stethoscope, title: "Técnico em Enfermagem", desc: "Fundamental para quem já atua na saúde." },
                 { icon: Wrench, title: "Mecânica Industrial", desc: "Regularize sua atuação nas grandes indústrias." },
               ].map((c, i) => (
-                <Reveal key={i} delay={i * 100}>
+                <Reveal key={`course-${i}`} delay={i * 100}>
                   <div onClick={openModal} className="bg-brandLight p-10 rounded-[2.5rem] border-2 border-transparent hover:border-brandOrange hover:bg-white hover:shadow-3xl transition-all cursor-pointer group">
                     <div className="bg-navy text-white p-5 rounded-2xl w-fit mb-8 group-hover:bg-brandOrange transition-colors">
                       <c.icon size={28} />
@@ -337,7 +323,7 @@ export default function App() {
                 { q: "Preciso fazer aulas?", a: "Não. O processo é baseado na Lei 9.394/96 Art. 41, que valida sua experiência profissional." },
                 { q: "Quais os requisitos?", a: "Ter pelo menos 18 anos, Ensino Médio completo e comprovar no mínimo 1 ano de experiência na área." }
               ].map((f, i) => (
-                <Reveal key={i} delay={i * 100}>
+                <Reveal key={`faq-${i}`} delay={i * 100}>
                   <div onClick={openModal} className="bg-white p-10 rounded-[2rem] border border-gray-100 hover:shadow-xl transition-all cursor-pointer">
                     <h4 className="text-navy font-black text-xl mb-4 flex items-start">
                       <HelpCircle className="text-brandOrange mr-4 mt-1" size={20} /> {f.q}
