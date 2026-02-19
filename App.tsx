@@ -178,22 +178,22 @@ export default function App() {
 
       <main className="flex-grow">
         {/* Hero Section - Ajuste de espaçamento superior conforme solicitado */}
-        <section id="início" className="relative bg-navy pt-24 pb-20 md:pt-32 md:pb-40 overflow-hidden">
+        <section id="início" className="relative bg-navy pt-20 pb-16 md:pt-28 md:pb-32 overflow-hidden">
           <div className="absolute inset-0 pointer-events-none">
             <div className="absolute top-1/4 -right-20 w-[600px] h-[600px] bg-brandOrange/20 rounded-full blur-[150px] animate-pulse"></div>
             <div className="absolute -bottom-24 -left-24 w-[500px] h-[500px] bg-brandBlueLight/30 rounded-full blur-[100px]"></div>
           </div>
           
           <div className="container mx-auto px-4 relative z-10">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
               <Reveal>
                 <div className="inline-flex items-center bg-white/5 border border-white/10 text-brandOrange px-6 py-2 rounded-full font-bold text-xs mb-8 tracking-[0.2em] uppercase backdrop-blur-md">
                   <Zap size={16} className="mr-2 fill-brandOrange" /> Transforme experiência em reconhecimento
                 </div>
-                <h1 className="text-4xl sm:text-5xl md:text-8xl font-title text-white mb-8 leading-[1.1] tracking-tighter">
+                <h1 className="text-4xl sm:text-5xl md:text-8xl font-title text-white mb-6 md:mb-8 leading-[1.1] tracking-tighter">
                   Sua experiência de 1 ano vale um <span className="text-brandOrange italic underline decoration-white/20">Diploma Técnico</span>
                 </h1>
-                <p className="text-white/80 text-lg md:text-2xl mb-12 max-w-xl font-medium leading-relaxed">
+                <p className="text-white/80 text-lg md:text-2xl mb-10 md:mb-12 max-w-xl font-medium leading-relaxed">
                   Sem provas longas. Sem aulas desnecessárias. Valide seu conhecimento profissional pelo MEC e conquiste o registro oficial no <span className="text-white font-bold underline decoration-brandOrange">SISTEC</span> agora.
                 </p>
                 
@@ -207,7 +207,7 @@ export default function App() {
                   </button>
                 </div>
 
-                <div className="mt-12 flex flex-wrap gap-6 md:gap-10 opacity-60">
+                <div className="mt-10 flex flex-wrap gap-6 md:gap-10 opacity-60">
                   <div className="flex items-center text-white text-[10px] font-black uppercase tracking-widest"><CheckCircle size={18} className="mr-3 text-brandOrange" /> Reconhecido MEC</div>
                   <div className="flex items-center text-white text-[10px] font-black uppercase tracking-widest"><CheckCircle size={18} className="mr-3 text-brandOrange" /> Válido p/ Concursos</div>
                   <div className="flex items-center text-white text-[10px] font-black uppercase tracking-widest"><CheckCircle size={18} className="mr-3 text-brandOrange" /> Registro no SISTEC</div>
@@ -219,20 +219,20 @@ export default function App() {
                   <div className="bg-white/10 backdrop-blur-xl p-8 md:p-10 rounded-[2.5rem] md:rounded-[3.5rem] border border-white/20 shadow-3xl">
                     <div className="grid grid-cols-2 gap-6 md:gap-10">
                       <div className="text-center">
-                        <p className="text-3xl sm:text-4xl md:text-5xl font-black text-brandOrange mb-2 tracking-tighter">100%</p>
-                        <p className="text-white/60 text-[9px] md:text-[10px] font-bold uppercase tracking-widest">Legalidade (LDB)</p>
+                        <p className="text-2xl sm:text-3xl md:text-4xl font-black text-brandOrange mb-2 tracking-tighter">100%</p>
+                        <p className="text-white/60 text-[9px] md:text-[10px] font-bold uppercase tracking-widest leading-tight">Legalidade (LDB)</p>
                       </div>
                       <div className="text-center">
-                        <p className="text-3xl sm:text-4xl md:text-5xl font-black text-brandOrange mb-2 tracking-tighter">48h</p>
-                        <p className="text-white/60 text-[9px] md:text-[10px] font-bold uppercase tracking-widest">diploma em mãos</p>
+                        <p className="text-2xl sm:text-3xl md:text-4xl font-black text-brandOrange mb-2 tracking-tighter">48h</p>
+                        <p className="text-white/60 text-[9px] md:text-[10px] font-bold uppercase tracking-widest leading-tight">diploma em mãos</p>
                       </div>
                       <div className="text-center">
-                        <p className="text-3xl sm:text-4xl md:text-5xl font-black text-brandOrange mb-2 tracking-tighter uppercase">Conselho</p>
-                        <p className="text-white/60 text-[9px] md:text-[10px] font-bold uppercase tracking-widest">Registro Profissional</p>
+                        <p className="text-2xl sm:text-3xl md:text-4xl font-black text-brandOrange mb-2 tracking-tighter uppercase leading-none">Conselho</p>
+                        <p className="text-white/60 text-[9px] md:text-[10px] font-bold uppercase tracking-widest leading-tight">Registro Profissional</p>
                       </div>
                       <div className="text-center">
-                        <p className="text-3xl sm:text-4xl md:text-5xl font-black text-brandOrange mb-2 tracking-tighter">SISTEC/MEC</p>
-                        <p className="text-white/60 text-[9px] md:text-[10px] font-bold uppercase tracking-widest">Validade Nacional</p>
+                        <p className="text-2xl sm:text-3xl md:text-4xl font-black text-brandOrange mb-2 tracking-tighter leading-none">SISTEC/MEC</p>
+                        <p className="text-white/60 text-[9px] md:text-[10px] font-bold uppercase tracking-widest leading-tight">Validade Nacional</p>
                       </div>
                     </div>
                   </div>
@@ -453,7 +453,7 @@ export default function App() {
            onClick={openModal}
            className="bg-[#25D366] text-white p-4 md:p-5 rounded-full shadow-3xl hover:scale-110 active:scale-95 transition-all group animate-bounce-slow flex items-center justify-center"
          >
-            <MessageCircle size={36} md:size={40} className="fill-white" />
+            <MessageCircle size={36} className="fill-white" />
             <div className="absolute -top-1 -right-1 w-6 h-6 md:w-7 md:h-7 bg-red-600 rounded-full border-2 border-white flex items-center justify-center text-[10px] font-black animate-pulse">1</div>
          </button>
       </div>
