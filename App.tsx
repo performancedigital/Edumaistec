@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { 
   CheckCircle, 
@@ -39,7 +38,7 @@ interface RevealProps {
   children?: React.ReactNode;
   className?: string;
   delay?: number;
-  // Fixing error: Type '{ key: number; delay: number; }' is not assignable to type 'RevealProps'.
+  // Added key to RevealProps to fix TS error when used in map()
   key?: React.Key;
 }
 
@@ -60,6 +59,7 @@ const LeadModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }
     // URL de redirecionamento solicitada: hubrhino + utm_campaign=vendas
     const redirectUrl = `https://hubrhino.rhinocrm.com.br/redirect-form?campaign=meta-lp-12x89-90&utm_source=meta&utm_campaign=vendas&nome=${encodeURIComponent(formData.name)}&whatsapp=${encodeURIComponent(formData.whatsapp)}`;
     
+    // Tentativa de abrir em nova aba, mas o track do lead já foi disparado
     window.open(redirectUrl, '_blank');
     onClose();
   };
