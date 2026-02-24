@@ -42,6 +42,19 @@ const LeadModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }
       (window as any).fbq('track', 'Lead');
     }
 
+    // Disparar Webhook
+    fetch('https://webhook.educaminas.com.br/webhook/lp-89', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        ...formData,
+        url: window.location.href,
+        timestamp: new Date().toISOString()
+      }),
+    }).catch(err => console.error('Webhook error:', err));
+
     // URL de redirecionamento solicitada com parâmetros de track
     const redirectUrl = `https://hubrhino.rhinocrm.com.br/redirect-form?campaign=meta-lp-12x89-90&utm_source=meta&utm_campaign=vendas&nome=${encodeURIComponent(formData.name)}&whatsapp=${encodeURIComponent(formData.whatsapp)}`;
     
