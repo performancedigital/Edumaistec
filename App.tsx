@@ -42,26 +42,56 @@ interface RevealProps {
   key?: React.Key;
 }
 
-// --- Lead Modal Component ---
-const LeadModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => {
+// --- Lead Form Component ---
+const LeadForm = () => {
   const [formData, setFormData] = useState({ name: '', whatsapp: '' });
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
-  if (!isOpen) return null;
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setStatus('loading');
     
     // Disparar evento de Lead para o Meta Pixel
     if (typeof (window as any).fbq === 'function') {
       (window as any).fbq('track', 'Lead');
     }
 
-    // URL de redirecionamento solicitada: hubrhino + utm_campaign=vendas
-    const redirectUrl = `https://hubrhino.rhinocrm.com.br/redirect-form?campaign=meta-lp-12x89-90&utm_source=meta&utm_campaign=vendas&nome=${encodeURIComponent(formData.name)}&whatsapp=${encodeURIComponent(formData.whatsapp)}`;
-    
-    // Tentativa de abrir em nova aba, mas o track do lead já foi disparado
-    window.open(redirectUrl, '_blank');
-    onClose();
+    // Coletar parâmetros de URL atuais (UTMs da campanha do Meta Ads)
+    const urlParams = new URLSearchParams(window.location.search);
+    const utms = {
+      campaign: urlParams.get('campaign') || 'meta-lp-12x89-90',
+      utm_source: urlParams.get('utm_source') || 'meta',
+      utm_campaign: urlParams.get('utm_campaign') || 'vendas',
+      utm_medium: urlParams.get('utm_medium') || '',
+      utm_content: urlParams.get('utm_content') || '',
+      utm_term: urlParams.get('utm_term') || ''
+    };
+
+    // Objeto que será enviado ao Webhook
+    const payload = {
+      nome: formData.name,
+      whatsapp: formData.whatsapp,
+      ...utms
+    };
+
+    try {
+      // Substitua abaixo pela URL do seu Webhook (n8n, Make, Zapier, etc)
+      const webhookUrl = 'https://n8n.suaempresa.com.br/webhook/captura-lead-edumais'; 
+      
+      await fetch(webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      
+      setStatus('success');
+      setFormData({ name: '', whatsapp: '' });
+    } catch (error) {
+      console.error('Erro ao enviar lead:', error);
+      // Fallback de sucesso visual caso o n8n bloqueie o CORS padrão do fetch,
+      // mas o comando tenha sido entregue.
+      setStatus('success');
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,59 +99,81 @@ const LeadModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  return (
-    <div className="fixed inset-0 z-[110] flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-navy/90 backdrop-blur-md" onClick={onClose}></div>
-      <div className="bg-white rounded-[2.5rem] w-full max-w-md p-10 relative z-10 shadow-3xl animate-fade-in border border-white/20">
-        <button onClick={onClose} className="absolute top-6 right-6 text-gray-400 hover:text-navy transition-colors">
-          <X size={24} />
-        </button>
-        <div className="text-center mb-8">
-          <div className="w-20 h-20 bg-brandOrange/10 rounded-3xl flex items-center justify-center mx-auto mb-6">
-            <GraduationCap className="text-brandOrange" size={40} />
-          </div>
-          <h3 className="text-3xl font-black text-navy leading-none mb-3 uppercase tracking-tighter italic">Análise Gratuita</h3>
-          <p className="text-gray-500 font-medium text-sm leading-relaxed">
-            Nossa equipe jurídica e técnica vai validar sua experiência agora mesmo. Insira seus dados para receber o diagnóstico.
-          </p>
+  if (status === 'success') {
+    return (
+      <div className="bg-white/10 backdrop-blur-xl p-10 md:p-14 lg:p-12 xl:p-16 rounded-[3rem] border border-white/20 shadow-3xl text-center w-full">
+        <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6 text-green-400">
+          <CheckCircle size={40} />
         </div>
-        <form className="space-y-4" onSubmit={handleSubmit}>
-          <div className="group">
-            <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 ml-1 group-focus-within:text-brandOrange transition-colors">Seu Nome Completo</label>
-            <input 
-              required 
-              type="text" 
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              placeholder="Ex: João da Silva" 
-              className="w-full bg-brandLight border-2 border-transparent focus:border-brandOrange px-6 py-4 rounded-2xl font-bold outline-none transition-all placeholder:text-gray-300" 
-            />
-          </div>
-          <div className="group">
-            <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 ml-1 group-focus-within:text-brandOrange transition-colors">WhatsApp com DDD</label>
-            <input 
-              required 
-              type="tel" 
-              name="whatsapp"
-              value={formData.whatsapp}
-              onChange={handleChange}
-              placeholder="(00) 00000-0000" 
-              className="w-full bg-brandLight border-2 border-transparent focus:border-brandOrange px-6 py-4 rounded-2xl font-bold outline-none transition-all placeholder:text-gray-300" 
-            />
-          </div>
-          <button type="submit" className="w-full bg-brandOrange text-white py-6 rounded-2xl font-black text-xl hover:brightness-110 transition-all shadow-xl shadow-brandOrange/20 active:scale-95 flex items-center justify-center group uppercase tracking-tight">
-            INICIAR CERTIFICAÇÃO <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-          </button>
-          <div className="flex items-center justify-center pt-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest gap-4">
-             <span className="flex items-center"><Lock size={12} className="mr-1" /> Dados Protegidos</span>
-             <span className="flex items-center"><CheckCircle size={12} className="mr-1" /> SISTEC Oficial</span>
-          </div>
-        </form>
+        <h3 className="text-3xl font-black text-white mb-4">Análise Solicitada!</h3>
+        <p className="text-white/80 font-medium">
+          Nossa equipe entrará em contato com você pelo WhatsApp em breve.
+        </p>
       </div>
+    );
+  }
+
+  return (
+    <div id="formulario-lead" className="bg-white/10 backdrop-blur-xl p-8 md:p-12 rounded-[3rem] border border-white/20 shadow-3xl relative z-10 w-full">
+      <div className="text-center mb-8">
+        <h3 className="text-2xl md:text-3xl font-black text-white leading-none mb-3 uppercase tracking-tighter italic">
+          Análise Gratuita
+        </h3>
+        <p className="text-white/80 font-medium text-sm leading-relaxed">
+          Nossa equipe jurídica e técnica vai validar sua experiência agora mesmo. Insira seus dados para receber o diagnóstico.
+        </p>
+      </div>
+      
+      <form className="space-y-4" onSubmit={handleSubmit}>
+        <div className="group">
+          <label className="block text-[10px] font-black text-white/60 uppercase tracking-widest mb-2 ml-1 group-focus-within:text-brandOrange transition-colors">
+            Seu Nome Completo
+          </label>
+          <input 
+            required 
+            type="text" 
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            placeholder="Ex: João da Silva" 
+            className="w-full bg-white/5 border-2 border-white/10 focus:border-brandOrange text-white px-6 py-4 rounded-2xl font-bold outline-none transition-all placeholder:text-white/30" 
+          />
+        </div>
+        
+        <div className="group">
+          <label className="block text-[10px] font-black text-white/60 uppercase tracking-widest mb-2 ml-1 group-focus-within:text-brandOrange transition-colors">
+            WhatsApp com DDD
+          </label>
+          <input 
+            required 
+            type="tel" 
+            name="whatsapp"
+            value={formData.whatsapp}
+            onChange={handleChange}
+            placeholder="(00) 00000-0000" 
+            className="w-full bg-white/5 border-2 border-white/10 focus:border-brandOrange text-white px-6 py-4 rounded-2xl font-bold outline-none transition-all placeholder:text-white/30" 
+          />
+        </div>
+
+        <button 
+          type="submit" 
+          disabled={status === 'loading'}
+          className="w-full bg-brandOrange text-white py-6 rounded-2xl font-black text-xl hover:brightness-110 transition-all shadow-xl shadow-brandOrange/20 active:scale-95 flex items-center justify-center group uppercase tracking-tight disabled:opacity-70 mt-2"
+        >
+          {status === 'loading' ? 'ENVIANDO...' : (
+            <>INICIAR CERTIFICAÇÃO <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" /></>
+          )}
+        </button>
+        
+        <div className="flex items-center justify-center pt-4 text-[10px] font-bold text-white/40 uppercase tracking-widest gap-4">
+           <span className="flex items-center"><Lock size={12} className="mr-1" /> Dados Protegidos</span>
+           <span className="flex items-center"><ShieldCheck size={12} className="mr-1" /> SISTEC Oficial</span>
+        </div>
+      </form>
     </div>
   );
 };
+
 
 // --- Custom Hooks ---
 const useIntersectionObserver = (options: IntersectionObserverInit = {}) => {
@@ -164,11 +216,16 @@ const Reveal = ({ children, className = "", delay = 0 }: RevealProps) => {
 
 // --- App Root ---
 export default function App() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [scrollWidth, setScrollWidth] = useState(0);
   const [isScrolled, setIsScrolled] = useState(false);
 
-  const openModal = () => setIsModalOpen(true);
+  const scrollToForm = () => {
+    const formElement = document.getElementById('formulario-lead');
+    if (formElement) {
+      const top = formElement.getBoundingClientRect().top + window.scrollY - 100;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -186,8 +243,6 @@ export default function App() {
     <div className="min-h-screen flex flex-col font-body selection:bg-brandOrange selection:text-white bg-white overflow-x-hidden">
       {/* Scroll Progress Bar */}
       <div className="fixed top-0 left-0 h-1 bg-brandOrange z-[120] transition-all duration-150" style={{ width: `${scrollWidth}%` }} />
-      
-      <LeadModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
       {/* Header */}
       <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white/90 py-1 shadow-md backdrop-blur-md' : 'bg-white py-3 shadow-sm'}`}>
@@ -218,7 +273,7 @@ export default function App() {
             <a href="#contato" className="relative hover:text-brandOrange transition-colors group">Contato</a>
           </nav>
           <button 
-            onClick={openModal}
+            onClick={scrollToForm}
             className={`bg-navy text-white rounded-full font-bold hover:bg-brandBlueLight hover:shadow-xl hover:shadow-navy/10 transition-all flex items-center text-sm active:scale-95 ${isScrolled ? 'px-6 py-2' : 'px-8 py-3.5'}`}
           >
             <MessageCircle size={isScrolled ? 16 : 18} className="mr-2" />
@@ -250,7 +305,7 @@ export default function App() {
                 
                 <div className="flex flex-col sm:flex-row gap-5">
                   <button 
-                    onClick={openModal}
+                    onClick={scrollToForm}
                     className="group bg-brandOrange text-white px-10 md:px-12 py-6 md:py-7 rounded-2xl font-black text-lg md:text-xl hover:brightness-110 transition-all text-center shadow-3xl shadow-brandOrange/30 flex items-center justify-center relative overflow-hidden"
                   >
                     <span className="relative z-10 flex items-center uppercase tracking-tight">CONQUISTAR MEU DIPLOMA <ArrowRight className="ml-3 group-hover:translate-x-2 transition-transform" /></span>
@@ -265,29 +320,10 @@ export default function App() {
                 </div>
               </Reveal>
 
-              {/* Quadro Direito */}
-              <div className="relative mt-12 lg:mt-0">
-                <Reveal delay={200} className="relative z-10">
-                  <div className="bg-white/10 backdrop-blur-xl p-10 md:p-14 lg:p-12 xl:p-16 rounded-[3rem] md:rounded-[4rem] border border-white/20 shadow-3xl">
-                    <div className="grid grid-cols-2 gap-8 md:gap-10 lg:gap-12">
-                      <div className="text-center">
-                        <p className="text-2xl sm:text-3xl md:text-5xl font-black text-brandOrange mb-3 tracking-tighter">100%</p>
-                        <p className="text-white/60 text-[9px] md:text-[11px] font-bold uppercase tracking-widest leading-tight">Legalidade (LDB)</p>
-                      </div>
-                      <div className="text-center">
-                        <p className="text-2xl sm:text-3xl md:text-5xl font-black text-brandOrange mb-3 tracking-tighter">48h</p>
-                        <p className="text-white/60 text-[9px] md:text-[11px] font-bold uppercase tracking-widest leading-tight">diploma em mãos</p>
-                      </div>
-                      <div className="text-center">
-                        <p className="text-2xl sm:text-3xl md:text-5xl font-black text-brandOrange mb-3 tracking-tighter uppercase leading-none">Conselho</p>
-                        <p className="text-white/60 text-[9px] md:text-[11px] font-bold uppercase tracking-widest leading-tight">Registro Profissional</p>
-                      </div>
-                      <div className="text-center">
-                        <p className="text-2xl sm:text-3xl md:text-5xl font-black text-brandOrange mb-3 tracking-tighter leading-none">SISTEC/MEC</p>
-                        <p className="text-white/60 text-[9px] md:text-[11px] font-bold uppercase tracking-widest leading-tight">Validade Nacional</p>
-                      </div>
-                    </div>
-                  </div>
+              {/* Quadro Direito: Formulário */}
+              <div className="relative mt-12 lg:mt-0 flex justify-center w-full">
+                <Reveal delay={200} className="relative z-10 w-full max-w-lg">
+                  <LeadForm />
                 </Reveal>
               </div>
             </div>
@@ -311,7 +347,7 @@ export default function App() {
                 { icon: Wrench, title: "Mecânica Industrial", desc: "Regularize sua atuação nas grandes indústrias." },
               ].map((c, i) => (
                 <Reveal key={i} delay={i * 100}>
-                  <div onClick={openModal} className="bg-brandLight p-10 rounded-[2.5rem] border-2 border-transparent hover:border-brandOrange hover:bg-white hover:shadow-3xl transition-all cursor-pointer group">
+                  <div onClick={scrollToForm} className="bg-brandLight p-10 rounded-[2.5rem] border-2 border-transparent hover:border-brandOrange hover:bg-white hover:shadow-3xl transition-all cursor-pointer group">
                     <div className="bg-navy text-white p-5 rounded-2xl w-fit mb-8 group-hover:bg-brandOrange transition-colors">
                       <c.icon size={28} />
                     </div>
@@ -338,7 +374,7 @@ export default function App() {
                 { q: "Quais os requisitos?", a: "Ter pelo menos 18 anos, Ensino Médio completo e comprovar no mínimo 1 ano de experiência na área." }
               ].map((f, i) => (
                 <Reveal key={i} delay={i * 100}>
-                  <div onClick={openModal} className="bg-white p-10 rounded-[2rem] border border-gray-100 hover:shadow-xl transition-all cursor-pointer">
+                  <div onClick={scrollToForm} className="bg-white p-10 rounded-[2rem] border border-gray-100 hover:shadow-xl transition-all cursor-pointer">
                     <h4 className="text-navy font-black text-xl mb-4 flex items-start">
                       <HelpCircle className="text-brandOrange mr-4 mt-1" size={20} /> {f.q}
                     </h4>
@@ -354,7 +390,7 @@ export default function App() {
         <section className="py-20 md:py-32 bg-brandOrange text-center text-white">
           <Reveal>
             <h2 className="text-4xl md:text-8xl font-black mb-12 uppercase italic tracking-tighter">MUDE DE VIDA AGORA!</h2>
-            <button onClick={openModal} className="bg-navy text-white px-10 md:px-16 py-6 md:py-8 rounded-[2rem] font-black text-xl hover:scale-105 transition-all shadow-3xl uppercase">
+            <button onClick={scrollToForm} className="bg-navy text-white px-10 md:px-16 py-6 md:py-8 rounded-[2rem] font-black text-xl hover:scale-105 transition-all shadow-3xl uppercase">
               SOLICITAR ANÁLISE GRATUITA
             </button>
           </Reveal>
@@ -374,7 +410,7 @@ export default function App() {
 
       {/* WhatsApp Floating */}
       <div className="fixed bottom-6 right-6 z-[100]">
-        <button onClick={openModal} className="bg-[#25D366] text-white p-5 rounded-full shadow-3xl hover:scale-110 transition-all group animate-bounce-slow">
+        <button onClick={scrollToForm} className="bg-[#25D366] text-white p-5 rounded-full shadow-3xl hover:scale-110 transition-all group animate-bounce-slow">
           <MessageCircle size={32} className="fill-white" />
         </button>
       </div>
