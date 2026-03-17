@@ -71,6 +71,7 @@ const LeadForm = () => {
     const payload = {
       nome: formData.name,
       whatsapp: formData.whatsapp,
+      tipo: 'formulario_lead',
       ...utms
     };
 
@@ -88,24 +89,20 @@ const LeadForm = () => {
       const redirectUrl = new URL('https://hubrhino.rhinocrm.com.br/edumaistec/redirect-form');
       redirectUrl.searchParams.append('campaign', utms.campaign);
       redirectUrl.searchParams.append('utm_source', utms.utm_source);
-      redirectUrl.searchParams.append('utm_campaign', utms.utm_campaign || 'meta-2490'); // Fallback solicitado: meta-2490
+      redirectUrl.searchParams.append('utm_campaign', utms.utm_campaign || 'meta-2490');
       
-      // Repassar outros UTMs se existirem
       if (utms.utm_medium) redirectUrl.searchParams.append('utm_medium', utms.utm_medium);
       if (utms.utm_content) redirectUrl.searchParams.append('utm_content', utms.utm_content);
       if (utms.utm_term) redirectUrl.searchParams.append('utm_term', utms.utm_term);
 
-      // Adicionar dados do formulário
       redirectUrl.searchParams.append('nome', formData.name);
       redirectUrl.searchParams.append('whatsapp', formData.whatsapp);
 
-      // Redirecionar após sucesso (na mesma aba para evitar bloqueios)
       window.location.href = redirectUrl.toString();
       
     } catch (error) {
       console.error('Erro ao enviar lead:', error);
-      // Mesmo com erro no webhook, tentamos o redirecionamento para não perder o fluxo do lead
-      window.location.href = `https://hubrhino.rhinocrm.com.br/edumaistec/redirect-form?campaign=meta-lp-12x89-90&utm_source=meta&utm_campaign=meta-2490&nome=${encodeURIComponent(formData.name)}&whatsapp=${encodeURIComponent(formData.whatsapp)}`;
+      window.location.href = `https://hubrhino.rhinocrm.com.br/edumaistec/redirect-form?campaign=${utms.campaign}&utm_source=${utms.utm_source}&utm_campaign=${utms.utm_campaign || 'meta-2490'}&nome=${encodeURIComponent(formData.name)}&whatsapp=${encodeURIComponent(formData.whatsapp)}`;
     }
   };
 
@@ -426,10 +423,33 @@ export default function App() {
       {/* WhatsApp Floating */}
       <div className="fixed bottom-6 right-6 z-[100]">
         <button 
-          onClick={() => {
+          onClick={async () => {
             const urlParams = new URLSearchParams(window.location.search);
-            const campaign = urlParams.get('campaign') || 'meta-lp-12x89-90';
-            window.location.href = `https://hubrhino.rhinocrm.com.br/edumaistec/redirect-form?campaign=${campaign}`;
+            const utms = {
+              campaign: urlParams.get('campaign') || 'meta-lp-12x89-90',
+              utm_source: urlParams.get('utm_source') || 'meta',
+              utm_campaign: urlParams.get('utm_campaign') || 'vendas',
+              utm_medium: urlParams.get('utm_medium') || '',
+              utm_content: urlParams.get('utm_content') || '',
+              utm_term: urlParams.get('utm_term') || ''
+            };
+
+            // Enviar para o webhook antes de redirecionar
+            try {
+              await fetch('https://n8n.comperformance.com.br/webhook/edumaistec', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                  tipo: 'clique_whatsapp',
+                  ...utms 
+                })
+              });
+            } catch (e) {
+              console.error('Erro ao logar clique whatsapp:', e);
+            }
+
+            // Redirecionamento final
+            window.location.href = `https://hubrhino.rhinocrm.com.br/edumaistec/redirect-form?campaign=${utms.campaign}&utm_source=${utms.utm_source}&utm_campaign=${utms.utm_campaign}`;
           }} 
           className="bg-[#25D366] text-white p-5 rounded-full shadow-3xl hover:scale-110 transition-all group animate-bounce-slow"
         >
