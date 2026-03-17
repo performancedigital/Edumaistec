@@ -75,7 +75,7 @@ const LeadForm = () => {
     };
 
     try {
-      // Substitua abaixo pela URL do seu Webhook (n8n, Make, Zapier, etc)
+      // URL do seu Webhook (n8n, Make, Zapier, etc)
       const webhookUrl = 'https://n8n.comperformance.com.br/webhook/edumaistec'; 
       
       await fetch(webhookUrl, {
@@ -84,13 +84,28 @@ const LeadForm = () => {
         body: JSON.stringify(payload)
       });
       
-      setStatus('success');
-      setFormData({ name: '', whatsapp: '' });
+      // Construir a URL de redirecionamento do Hubrhino adaptada
+      const redirectUrl = new URL('https://hubrhino.rhinocrm.com.br/edumaistec/redirect-form');
+      redirectUrl.searchParams.append('campaign', utms.campaign);
+      redirectUrl.searchParams.append('utm_source', utms.utm_source);
+      redirectUrl.searchParams.append('utm_campaign', utms.utm_campaign || 'meta-2490'); // Fallback solicitado: meta-2490
+      
+      // Repassar outros UTMs se existirem
+      if (utms.utm_medium) redirectUrl.searchParams.append('utm_medium', utms.utm_medium);
+      if (utms.utm_content) redirectUrl.searchParams.append('utm_content', utms.utm_content);
+      if (utms.utm_term) redirectUrl.searchParams.append('utm_term', utms.utm_term);
+
+      // Adicionar dados do formulário
+      redirectUrl.searchParams.append('nome', formData.name);
+      redirectUrl.searchParams.append('whatsapp', formData.whatsapp);
+
+      // Redirecionar após sucesso (na mesma aba para evitar bloqueios)
+      window.location.href = redirectUrl.toString();
+      
     } catch (error) {
       console.error('Erro ao enviar lead:', error);
-      // Fallback de sucesso visual caso o n8n bloqueie o CORS padrão do fetch,
-      // mas o comando tenha sido entregue.
-      setStatus('success');
+      // Mesmo com erro no webhook, tentamos o redirecionamento para não perder o fluxo do lead
+      window.location.href = `https://hubrhino.rhinocrm.com.br/edumaistec/redirect-form?campaign=meta-lp-12x89-90&utm_source=meta&utm_campaign=meta-2490&nome=${encodeURIComponent(formData.name)}&whatsapp=${encodeURIComponent(formData.whatsapp)}`;
     }
   };
 
@@ -410,7 +425,14 @@ export default function App() {
 
       {/* WhatsApp Floating */}
       <div className="fixed bottom-6 right-6 z-[100]">
-        <button onClick={scrollToForm} className="bg-[#25D366] text-white p-5 rounded-full shadow-3xl hover:scale-110 transition-all group animate-bounce-slow">
+        <button 
+          onClick={() => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const campaign = urlParams.get('campaign') || 'meta-lp-12x89-90';
+            window.location.href = `https://hubrhino.rhinocrm.com.br/edumaistec/redirect-form?campaign=${campaign}`;
+          }} 
+          className="bg-[#25D366] text-white p-5 rounded-full shadow-3xl hover:scale-110 transition-all group animate-bounce-slow"
+        >
           <MessageCircle size={32} className="fill-white" />
         </button>
       </div>
