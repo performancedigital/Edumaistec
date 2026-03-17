@@ -129,10 +129,10 @@ const LeadForm = () => {
     <div id="formulario-lead" className="bg-white/10 backdrop-blur-xl p-8 md:p-12 rounded-[3rem] border border-white/20 shadow-3xl relative z-10 w-full">
       <div className="text-center mb-8">
         <h3 className="text-2xl md:text-3xl font-black text-white leading-none mb-3 uppercase tracking-tighter italic">
-          Análise Gratuita
+          Descubra se você já é um Técnico
         </h3>
         <p className="text-white/80 font-medium text-sm leading-relaxed">
-          Nossa equipe jurídica e técnica vai validar sua experiência agora mesmo. Insira seus dados para receber o diagnóstico.
+          Nossa equipe jurídica vai validar sua experiência agora. Insira seus dados para receber o diagnóstico de proficiência em 2 minutos.
         </p>
       </div>
       
@@ -249,7 +249,7 @@ export default function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const logoUrl = "https://raw.githubusercontent.com/performancedigital/Edumaistec/main/logo.png"; 
+  const logoUrl = "/logo.png"; 
 
   return (
     <div className="min-h-screen flex flex-col font-body selection:bg-brandOrange selection:text-white bg-white overflow-x-hidden">
@@ -263,7 +263,7 @@ export default function App() {
             <img 
               src={logoUrl} 
               alt="EdumaisTec Logo" 
-              className={`transition-all duration-500 group-hover:scale-105 group-hover:rotate-1 object-contain ${isScrolled ? 'h-10 md:h-12' : 'h-14 md:h-16'}`}
+              className={`transition-all duration-500 group-hover:scale-105 group-hover:rotate-1 object-contain bg-white rounded-lg p-1 ${isScrolled ? 'h-10 md:h-12' : 'h-14 md:h-16'}`}
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
                 target.style.display = 'none';
@@ -309,10 +309,10 @@ export default function App() {
                   <Zap size={16} className="mr-2 fill-brandOrange" /> Transforme experiência em reconhecimento
                 </div>
                 <h1 className="text-4xl sm:text-5xl md:text-[4.2rem] lg:text-[4.8rem] xl:text-[5.5rem] font-title text-white mb-6 md:mb-8 leading-[1.05] tracking-tighter">
-                  Sua experiência de 1 ano vale um <span className="text-brandOrange italic underline decoration-white/20">Diploma Técnico</span>
+                  Sua experiência vale um <span className="text-brandOrange italic underline decoration-white/20">Diploma Técnico</span> sem aulas
                 </h1>
                 <p className="text-white/80 text-lg md:text-2xl mb-10 md:mb-12 max-w-xl font-medium leading-relaxed">
-                  Sem provas longas. Sem aulas desnecessárias. Valide seu conhecimento profissional pelo MEC e conquiste o registro oficial no <span className="text-white font-bold underline decoration-brandOrange">SISTEC</span> agora.
+                  Não perca tempo em sala de aula. Valide seu conhecimento profissional (Lei 9.394/96 Art. 41) e conquiste o registro oficial no <span className="text-white font-bold underline decoration-brandOrange">SISTEC</span> em até 48 horas.
                 </p>
                 
                 <div className="flex flex-col sm:flex-row gap-5">
