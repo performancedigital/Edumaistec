@@ -76,7 +76,7 @@ const LeadForm = () => {
 
     try {
       // Substitua abaixo pela URL do seu Webhook (n8n, Make, Zapier, etc)
-      const webhookUrl = 'https://n8n.suaempresa.com.br/webhook/captura-lead-edumais'; 
+      const webhookUrl = 'https://n8n.comperformance.com.br/webhook/edumaistec'; 
       
       await fetch(webhookUrl, {
         method: 'POST',
