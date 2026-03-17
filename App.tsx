@@ -126,13 +126,13 @@ const LeadForm = () => {
   }
 
   return (
-    <div id="formulario-lead" className="bg-white/10 backdrop-blur-xl p-8 md:p-12 rounded-[3rem] border border-white/20 shadow-3xl relative z-10 w-full">
+    <div id="formulario-lead" className="bg-white/10 backdrop-blur-xl p-8 md:p-12 rounded-[3rem] border border-white/20 shadow-3xl relative z-10 w-full transition-all duration-500 hover:shadow-brandOrange/10">
       <div className="text-center mb-8">
         <h3 className="text-2xl md:text-3xl font-black text-white leading-none mb-3 uppercase tracking-tighter italic">
-          Descubra se você já é um Técnico
+          Garanta seu futuro profissional
         </h3>
         <p className="text-white/80 font-medium text-sm leading-relaxed">
-          Nossa equipe jurídica vai validar sua experiência agora. Insira seus dados para receber o diagnóstico de proficiência em 2 minutos.
+          Sua experiência é o seu maior patrimônio. Insira seus dados abaixo para que nossa equipe te ajude a transformá-la em um Diploma Técnico reconhecido pelo MEC.
         </p>
       </div>
       
@@ -309,10 +309,10 @@ export default function App() {
                   <Zap size={16} className="mr-2 fill-brandOrange" /> Transforme experiência em reconhecimento
                 </div>
                 <h1 className="text-4xl sm:text-5xl md:text-[4.2rem] lg:text-[4.8rem] xl:text-[5.5rem] font-title text-white mb-6 md:mb-8 leading-[1.05] tracking-tighter">
-                  Sua experiência vale um <span className="text-brandOrange italic underline decoration-white/20">Diploma Técnico</span> sem aulas
+                  Sua experiência vale um <span className="text-brandOrange italic underline decoration-white/20">Diploma Oficial</span> em mãos
                 </h1>
                 <p className="text-white/80 text-lg md:text-2xl mb-10 md:mb-12 max-w-xl font-medium leading-relaxed">
-                  Não perca tempo em sala de aula. Valide seu conhecimento profissional (Lei 9.394/96 Art. 41) e conquiste o registro oficial no <span className="text-white font-bold underline decoration-brandOrange">SISTEC</span> em até 48 horas.
+                  Você já sabe fazer, agora só precisa do documento. Valide seu conhecimento (Lei 9.394/96) de forma 100% digital e sem precisar voltar para a sala de aula.
                 </p>
                 
                 <div className="flex flex-col sm:flex-row gap-5">
@@ -363,8 +363,61 @@ export default function App() {
                     <div className="bg-navy text-white p-5 rounded-2xl w-fit mb-8 group-hover:bg-brandOrange transition-colors">
                       <c.icon size={28} />
                     </div>
-                    <h4 className="text-2xl font-black text-navy mb-4">{c.title}</h4>
-                    <p className="text-gray-500">{c.desc}</p>
+                    <h4 className="text-2xl font-black text-navy mb-4 group-hover:text-brandOrange transition-colors">{c.title}</h4>
+                    <p className="text-gray-500 group-hover:text-navy/70 transition-colors">{c.desc}</p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Nossos Alunos */}
+        <section id="alunos" className="py-20 md:py-32 bg-navy relative overflow-hidden">
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute top-0 right-0 w-96 h-96 bg-brandOrange rounded-full blur-[100px]" />
+          </div>
+          <div className="container mx-auto px-4 relative z-10 text-center">
+            <Reveal>
+              <h2 className="text-4xl md:text-7xl text-white mb-8 font-title tracking-tighter uppercase leading-none">
+                Quem já <span className="text-brandOrange">conquistou</span> o seu
+              </h2>
+              <p className="text-white/60 max-w-2xl mx-auto text-lg md:text-xl font-medium mb-16 italic">
+                "O que era um sonho distante se tornou realidade em poucos dias. Minha carreira mudou."
+              </p>
+            </Reveal>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {[
+                { 
+                  name: "Marcos Oliveira", 
+                  role: "Técnico em Segurança", 
+                  text: "Trabalhava há 5 anos na área e não conseguia promoção. Com a EdumaisTec, tirei meu diploma em tempo recorde!",
+                  img: "/aluno1.png"
+                },
+                { 
+                  name: "Ricardo Santos", 
+                  role: "Técnico em Edificações", 
+                  text: "O processo foi muito sério e rápido. Hoje tenho meu registro no CFT e assino meus próprios projetos.",
+                  img: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=400"
+                },
+                { 
+                  name: "Juliana Costa", 
+                  role: "Técnica em Eletrotécnica", 
+                  text: "Tinha medo de ser golpe, mas a equipe me passou total segurança. Recomendo para todos os meus colegas de profissão.",
+                  img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400"
+                }
+              ].map((aluno, i) => (
+                <Reveal key={i} delay={i * 200}>
+                  <div className="bg-white/5 backdrop-blur-md p-8 rounded-[2.5rem] border border-white/10 text-left hover:bg-white/10 transition-all group">
+                    <div className="flex items-center gap-4 mb-6">
+                      <img src={aluno.img} alt={aluno.name} className="w-16 h-16 rounded-full object-cover border-2 border-brandOrange" />
+                      <div>
+                        <h4 className="text-white font-black text-lg leading-tight">{aluno.name}</h4>
+                        <span className="text-brandOrange text-xs font-bold uppercase tracking-widest">{aluno.role}</span>
+                      </div>
+                    </div>
+                    <p className="text-white/70 italic font-medium leading-relaxed">"{aluno.text}"</p>
                   </div>
                 </Reveal>
               ))}
