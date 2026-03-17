@@ -77,7 +77,7 @@ const LeadForm = () => {
 
     try {
       // URL do seu Webhook (n8n, Make, Zapier, etc)
-      const webhookUrl = 'https://n8n.comperformance.com.br/webhook/edumaistec'; 
+      const webhookUrl = 'https://webhook.educaminas.com.br/webhook/edumaisteclp'; 
       
       await fetch(webhookUrl, {
         method: 'POST',
@@ -434,9 +434,8 @@ export default function App() {
               utm_term: urlParams.get('utm_term') || ''
             };
 
-            // Enviar para o webhook antes de redirecionar
             try {
-              await fetch('https://n8n.comperformance.com.br/webhook/edumaistec', {
+              await fetch('https://webhook.educaminas.com.br/webhook/edumaisteclp', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
